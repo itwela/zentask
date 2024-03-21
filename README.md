@@ -1,5 +1,13 @@
 ## Setup
 
+Env
+---
+
+Still finalizing ENV setup steps but this would be important if you want to use the application. Now I'm doing research into the security of having my db key just availibale or if there is a better option somehow.
+
+Download
+---
+
 To download the repository, follow these steps:
 
 Click on the green "Code" button located towards the top right.
@@ -11,10 +19,6 @@ Download ZIP: This will download the repository as a compressed ZIP file to your
 Clone Repository: If you have Git installed, you can clone the repository using the provided URL. Open a terminal or command prompt, navigate to your desired directory, and use the following command:
 
 git clone https://github.com/repository-link-here
-
-Environment Variables:
-
-
 
 
 ## Features:

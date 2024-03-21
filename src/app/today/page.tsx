@@ -49,7 +49,7 @@ export default function Today({ taskdata, projectdata }: { taskdata: any, projec
 
           <div className="flex flex-col gap-3 mb-3">
             <span className="flex place-items-center justify-between p-2">
-              <span className="font-bold w-max">{weekday} | {month} {numberday}</span>
+              <span className="font-bold w-max">{weekday}, {month} {numberday}</span>
               <span onClick={() => setTaskHover(!taskHover)} className="p-2 hover:bg-slate-100 cursor-pointer ">Edit</span>
             </span>
             <ZenLine />
