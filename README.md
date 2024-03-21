@@ -1,10 +1,5 @@
 ## Setup
 
-Env
----
-
-Still finalizing ENV setup steps but this would be important if you want to use the application. Now I'm doing research into the security of having my db key just availibale or if there is a better option somehow.
-
 Download
 ---
 
@@ -20,6 +15,21 @@ Clone Repository: If you have Git installed, you can clone the repository using 
 
 git clone https://github.com/repository-link-here
 
+## Getting Started
+
+First, run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Features:
 
@@ -59,31 +69,11 @@ Activity
 - Mterial Ui: https://mui.com/material-ui/
 - Chakra Ui: https://chakra-ui.com
 - Tailwind.css: https://tailwindcss.com
-<!-- Shadcn/UI: https://ui.shadcn.com -->
 - Stripe: https://stripe.com
 - Prisma: https://prisma.io
 - Supabase: https://supabase.com
+<!-- Shadcn/UI: https://ui.shadcn.com -->
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`]
 
-## Getting Started
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-B

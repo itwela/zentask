@@ -200,8 +200,8 @@ export default function ZenAddTask({projectdata, today, tommorrow}: {today: bool
                     <div className="flex gap-2 mt-5 justify-between">
 
                         {/* choose project */}
-                        <Badge className="hover:bg-slate-100 flex place-items-center outline outline-[1px] rounded-lg px-3 w-1/4 outline-slate-300">
-                            <select onChange={handleStatusChange} defaultValue={'Inbox'} id="project" name="project" className="w-full  bg-transparent">
+                        <Badge className="hover:bg-slate-100 flex place-items-center place-content-center outline outline-[1px] rounded-lg px-3 w-1/4 outline-slate-300">
+                            <select onChange={handleStatusChange} defaultValue={'Inbox'} id="project" name="project" className="w-full h-full  bg-transparent">
                                 <option value="Inbox">Inbox</option>
                                 {projectdata?.map((project: any) => (
                                 <option key={project.id} value={project.id as string}>{project.name}</option>

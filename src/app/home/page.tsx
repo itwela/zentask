@@ -18,6 +18,8 @@ import Popover from "@mui/material/Popover";
 import React from "react";
 import { deleteTaskData } from "@/actions/database";
 import Link from "next/link";
+import ZenAddThought from "../dashComponents/addThought_C";
+import ZenAddQuote from "../dashComponents/addQuote_C";
 // client Component
 
 
@@ -137,14 +139,34 @@ export default function Home({taskdata, projectdata}: {taskdata: any, projectdat
               <ZenAddTask projectdata={projectdata} today={false} tommorrow={false} />
             </span>
 
+            {/* add section */}
+            <div onMouseEnter={handleSectionHover} onMouseLeave={handleSectionExit} className="relative w-full h-[3em] my-3 flex flex-col place-items-center">
+            <span className="text-transparent cursor-pointer w-full h-[1em]">.....</span>
+              { sectionHover && (
+                <ZenAddSection />
+                )}
+                <span className="text-transparent cursor-pointer w-full h-[1em]">.....</span>
+            </div>
 
-              <div onMouseEnter={handleSectionHover} onMouseLeave={handleSectionExit} className="relative mt-3 w-full flex flex-col place-items-center">
-              <span className="text-transparent cursor-pointer w-full h-[1em]">.....</span>
-               { sectionHover && (
-                 <ZenAddSection />
-                 )}
-                 <span className="text-transparent cursor-pointer w-full h-[1em]">.....</span>
+            {/* thoughts and quotes */}
+            <div className="flex flex-col gap-6">
+              <div className="flex w-full">
+                  <div className="flex flex-col w-full gap-2">
+                    <h2 className="font-bold">Thoughts</h2>
+                    <h3 className="py-3">Some thoughts....</h3>
+                    <ZenLine />
+                    <ZenAddThought />
+                  </div>
               </div>
+              <div className="flex w-full">
+                  <div className="flex flex-col w-full gap-2">
+                    <h2 className="font-bold">Quotes</h2>
+                    <h3 className="py-3">Some quotes....</h3>
+                    <ZenLine />
+                    <ZenAddQuote />
+                  </div>
+              </div>
+            </div>
               
 
 
