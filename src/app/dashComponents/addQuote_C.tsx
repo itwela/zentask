@@ -1,0 +1,14 @@
+'use client'
+
+import { BsPlusLg } from "react-icons/bs"
+
+
+export default function ZenAddQuote() {
+    return (
+        <>
+            <span className="cursor-pointer place-items-center flex gap-2">
+                <BsPlusLg /> Add Quote
+            </span>
+        </>
+    )
+}

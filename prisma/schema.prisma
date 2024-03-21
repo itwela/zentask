@@ -1,0 +1,150 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String  @id @unique
+  firstName  String?
+  lastName   String?
+  username   String?
+  email      String  @unique
+  profileImg String?
+
+  inbox    Inbox?
+  projects Project[]
+  Section  Section[]
+  tasks    Task[]
+  subtasks Subtask[]
+  comments Comment[]
+}
+
+
+model Inbox {
+  id        String   @id @default(uuid())
+  name      String   @default("inbox")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  User   User    @relation(fields: [userId], references: [id])
+  userId String  @unique
+
+  tasks Task[]   // All tasks go to the inbox by default
+}
+
+model Project {
+  id        String   @id @default(uuid())
+  name      String?  @default("inbox")
+  color     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  User   User?  @relation(fields: [userId], references: [id])
+  userId String
+
+  tasks    Task[] // Tasks associated with this project
+  sections Section[] // Sections associated with this project
+  comments Comment[] // Comments associated with this project
+}
+
+model Section {
+  id        String   @id @default(uuid())
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  User   User?  @relation(fields: [userId], references: [id])
+  userId String
+
+  project   Project @relation(fields: [projectId], references: [id])
+  projectId String
+
+  tasks Task[] // Tasks associated with this section
+  comments Comment[] // Comments associated with this section
+}
+
+model Task {
+  id          String    @id @default(uuid())
+  name        String?
+  description String?
+  completed   Boolean   @default(false) // Default subtask as not completed
+  duedate     String?
+  priority    String?
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Add user relationship
+  User        User?     @relation(fields: [userId], references: [id])
+  userId      String
+
+  // Make the relationship with Project nullable
+  project     Project?   @relation(fields: [projectId], references: [id])
+  projectId   String?  
+
+  section     Section?  @relation(fields: [sectionId], references: [id])
+  sectionId   String?
+
+  subtasks    Subtask[] // Subtasks associated with this task
+
+  // Add the inverse relation field pointing back to the Inbox model
+  inbox       Inbox?    @relation(fields: [inboxId], references: [id])
+  inboxId     String?
+
+  comments Comment[] // Comments associated with this task
+}
+
+
+model Subtask {
+  id          String  @id @default(uuid())
+  name        String?
+  description String?
+  completed   Boolean @default(false) // Default subtask as not completed
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Add user relationship
+  User   User?  @relation(fields: [userId], references: [id])
+  userId String
+
+  // Relationship with parent task
+  task   Task   @relation(fields: [taskId], references: [id])
+  taskId String
+
+  comments Comment[] // Comments associated with this subtask
+
+}
+
+model Comment {
+  id          String  @id @default(uuid())
+  content     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relationships with other models
+  user        User    @relation(fields: [userId], references: [id])
+  userId      String
+
+  task        Task?   @relation(fields: [taskId], references: [id])
+  taskId      String?
+
+  project     Project? @relation(fields: [projectId], references: [id])
+  projectId   String?
+
+  section     Section? @relation(fields: [sectionId], references: [id])
+  sectionId   String?
+
+  subtask     Subtask? @relation(fields: [subtaskId], references: [id])
+  subtaskId   String?
+}
