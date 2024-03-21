@@ -54,15 +54,15 @@ Activity
 
 # Resources Used
 
-Next.js: https://nextjs.org
-Clerk Auth: https://clerk.com
-Mterial Ui: https://mui.com/material-ui/
-Chakra Ui: https://chakra-ui.com
-Tailwind.css: https://tailwindcss.com
+- Next.js: https://nextjs.org
+- Clerk Auth: https://clerk.com
+- Mterial Ui: https://mui.com/material-ui/
+- Chakra Ui: https://chakra-ui.com
+- Tailwind.css: https://tailwindcss.com
 <!-- Shadcn/UI: https://ui.shadcn.com -->
-Stripe: https://stripe.com
-Prisma: https://prisma.io
-Supabase: https://supabase.com
+- Stripe: https://stripe.com
+- Prisma: https://prisma.io
+- Supabase: https://supabase.com
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`]
 
@@ -86,3 +86,4 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 ## Learn More
 
+B
