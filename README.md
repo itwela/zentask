@@ -13,7 +13,9 @@ Download ZIP: This will download the repository as a compressed ZIP file to your
 
 Clone Repository: If you have Git installed, you can clone the repository using the provided URL. Open a terminal or command prompt, navigate to your desired directory, and use the following command:
 
+```bash
 git clone https://github.com/repository-link-here
+```
 
 ## Getting Started
 
