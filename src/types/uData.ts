@@ -10,14 +10,17 @@ export interface ZenUser {
 export interface ZenProject {
   id: string;
   name: string | null;
-  color: string | null;
   userId: string;
+  projectId?: string | null;
 }
 
 export interface ZenSection {
   id: string;
+  userId: string;
   name: string | null;
-  projectId: string;
+  projectId?: string;
+  createdAt: string | null;
+  updeatedAt: string | null;
 }
 
 export interface ZenTask {
@@ -49,7 +52,7 @@ export type UserProps = {
 }
 
 export type ProjectProps = {
-  projectdata: ZenProject[]
+  projectdata: ZenProject[] | null;
 }
 
 export type SectionProps = {

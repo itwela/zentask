@@ -26,10 +26,10 @@ import { ZenProject } from "@/types/uData";
 import { UserProps } from "@/types/uData";
 import { ProjectProps } from "@/types/uData";
 
-import ZenAddTask from "./addTask_C";
-import ZenAddTaskModal from "./addtaskModal_S";
+import ZenAddTask from "./🔵addTask_C";
+import ZenAddTaskModal from "./🔵addtaskModal_S";
 import { BiPlus } from "react-icons/bi";
-import ZenAddProjectModal from "./addProjectsModal_C";
+import ZenAddProjectModal from "./🟢addProjectsModal_C";
 
 
 
@@ -164,7 +164,7 @@ export function ZenMenuClient(
 
                 { openProj === false && (
                   
-                <span onClick={handleOpenProj} className="p-2">
+                <span onClick={handleOpenProj} className="p-2 h-max">
                   <IoIosArrowForward className=""  size={15} />
                 </span>
 
@@ -176,35 +176,11 @@ export function ZenMenuClient(
                 </span>
                 )}
 
-                {/* <span onClick={handleClick}>
-                  <BiPlus size={15}/>
-                </span>
-                <Popover
-                  open={open}
-                  onClose={handleClose}
-                  anchorEl={anchorEl}
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                >
-                  <span className="flex flex-col place-items-center rounded-lg ">
-                    <span className="w-[150px] flex flex-col gap-3 p-4">
-                      <span className="flex flex-col gap-2">
-                        <ZenAddProjectModal projectdata={projectdata}/>
-                      </span>
-                    </span>
-                  </span>
-                </Popover> */}
               </span>
               {openProj === true && (
                 <span className="flex flex-col p-2">
                   {projectdata?.map((project) => (
-                    <span className="p-2 hover:bg-lime-500/30 rounded-lg">
+                    <span className="p-2 hover  flex place-items-center hover:bg-lime-500/30 rounded-lg h-[3em]">
                       {project.name}
                     </span>
                   ))}

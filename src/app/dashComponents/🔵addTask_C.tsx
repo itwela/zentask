@@ -48,6 +48,18 @@ export default function ZenAddTask({projectdata, today, tommorrow}: {today: bool
             }));
     };
 
+    // Handle input change
+    const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            taskdata: {
+                ...prevState.taskdata,
+                [name]: value
+                }
+            }));
+    };
+
     // Hndle date
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
@@ -118,14 +130,13 @@ export default function ZenAddTask({projectdata, today, tommorrow}: {today: bool
                     />
 
                     {/* Description */}
-                    <input 
+                    <textarea 
                         autoComplete="off"
-                        className="outline-none bg-transparent"
-                        type="text" 
+                        className="outline-none bg-transparent h-[100px]"
                         name="description"
                         id="description"
                         placeholder="Description"
-                        onChange={handleInputChange} 
+                        onChange={handleTextAreaChange} 
                     />
 
                         

@@ -20,6 +20,11 @@ export async function getUserData() {
     return data;
   }
 
+// END USER STUFF ------------------------------------------------
+
+// 
+
+// ------------------ section functions -------------------------------------------------------
 
 //  this gets section Data
 export async function getSectionData() {
@@ -35,6 +40,137 @@ export async function getSectionData() {
   
   return data;
 }
+
+//  this adds section
+export async function addSection(formData: FormData) {
+  noStore();
+  const requestBody = formData;
+  
+  const formSectionName = formData.get('name') as string;
+  const formProject = formData.get('project') as string;
+
+  console.log('old project: ', formProject);
+
+  let sectiondata: any = {
+    userId: uId,
+    name: formSectionName,
+  };
+
+  if (formProject != "Inbox") {
+    sectiondata.projectId = formProject;
+  }
+
+  console.log('new project: ', sectiondata.projectId);
+
+  const apiAdd = await prisma?.section.create({
+    data: sectiondata
+  });
+
+  revalidatePath("/");
+}
+
+export const updateSectionData = async (formData: FormData) => {
+  
+  const sectionId = formData.get('sectionId') as string
+  const formSectionName = formData.get('name') as string;
+  const formProject = formData.get('project') as string;
+
+  console.log('the Name', formSectionName);
+  console.log('old project: ', formProject);
+
+  let sectiondata: any = {
+    userId: uId,
+    name: formSectionName,
+  };
+
+  if (formProject != "Inbox") {
+    sectiondata.projectId = formProject;
+  }
+
+  console.log('new project: ', sectiondata.projectId);
+
+  const apiAdd = await prisma?.section.update({
+    where: {
+      id: sectionId,
+    },
+    data: sectiondata  
+  });
+
+  revalidatePath("/");
+
+}
+
+
+//  this updates section
+
+//  this deletes section
+export const deleteSectionData = async (formData: FormData) => {
+  noStore();
+
+  const sectionId = formData.get('sectionId') as string
+
+  // Delete all found tasks
+  await prisma.task.deleteMany({
+    where: {
+      sectionId: sectionId,
+    },
+  });
+
+  // Delete the section itself
+  await prisma.section.delete({
+    where: {
+      id: sectionId,
+    },
+  });
+
+  revalidatePath('/');
+}
+
+// this is the function to add tasks to the database based on user
+export async function addSectionTask(formData: FormData) {
+  noStore();
+  const requestBody = formData;
+  
+  const formSectionId = formData.get('sectionId') as string
+  const formTaskName = formData.get('name') as string;
+  const formDescription = formData.get('description') as string;
+  const formDueDate = formData.get('duedate') as string;
+  const formPriority = formData.get('priority') as string;
+  const formProject = formData.get('project') as string;
+
+  let sectionTaskData: any = {
+    userId: uId,
+    sectionId: formSectionId, 
+    name: formTaskName,
+    description: formDescription,
+    duedate: formDueDate, 
+    priority: formPriority,
+  };
+
+  if (formProject != "Inbox") {
+    sectionTaskData.projectId = formProject;
+  }
+
+  console.log('new project: ', sectionTaskData.projectId);
+
+  const apiAdd = await prisma?.task.create({
+      data: sectionTaskData 
+  });
+
+  revalidatePath("/");
+}
+
+export const updateSectionTaskData = async (formData: FormData) => {
+  
+  const sectionId = formData.get('sectionId') as string
+  
+  updateTaskData(formData, sectionId);
+}
+
+
+// END SECTION STUFF ------------------------------------------------
+
+// 
 
 // ------------------ project functions -------------------------------------------------------
 
@@ -75,7 +211,6 @@ export async function addProject(formData: FormData) {
     revalidatePath("/")       
 }
 
-
 export const deleteProjectData = async (formData: FormData) => {
   noStore();
 
@@ -89,6 +224,10 @@ export const deleteProjectData = async (formData: FormData) => {
 
   revalidatePath('/')
 }
+
+// END PROJECT STUFF ------------------------------------------------
+
+// 
 
 // ------------------ task functions -------------------------------------------------------
 
@@ -113,7 +252,6 @@ export async function getTodayTaskData() {
   console.log(data)
   return data;
 }
-
 
 //  this gets alltask Data
 export async function getTaskData() {
@@ -164,11 +302,11 @@ export async function addTask(formData: FormData) {
   revalidatePath("/");
 }
 
-
-export const updateTaskData = async (formData: FormData) => {
+export const updateTaskData = async (formData: FormData, sectionId?: string, projectId?: string) => {
   noStore();
 
   const taskId = formData.get('taskId') as string
+  const theSectionID = sectionId
   const formTaskName = formData.get('name') as string;
   const formDescription = formData.get('description') as string;
   const formDueDate = formData.get('duedate') as string;
@@ -187,6 +325,10 @@ export const updateTaskData = async (formData: FormData) => {
     taskData.projectId = formProject;
   }
 
+  if (theSectionID != undefined) {
+    taskData.sectionId = theSectionID
+  }
+
   const apiAdd = await prisma?.task.update({
 
     where: {
@@ -198,7 +340,6 @@ export const updateTaskData = async (formData: FormData) => {
     revalidatePath("/")
 
 }
-
 
 //  this is the function to delete jobs
 export const deleteTaskData = async (formData: FormData) => {
@@ -216,6 +357,10 @@ export const deleteTaskData = async (formData: FormData) => {
   
 
 }
+
+// END TASK STUFF ------------------------------------------------
+
+// 
 
 // ---------------- subtask functions -----------------------------------------------
 

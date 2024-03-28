@@ -5,8 +5,8 @@ import { currentUser } from "@clerk/nextjs";
 import { unstable_noStore as noStore } from "next/cache";
 import { Suspense } from "react";
 import { ZenMenuS } from "../dashComponents/menu_S";
-import ZenAddTask from "../dashComponents/addTask_C";
-import ZenAddProject from "../dashComponents/addProjects_C";
+import ZenAddTask from "../dashComponents/🔵addTask_C";
+import ZenAddProject from "../dashComponents/🟢addProjects_C";
 import ZenBottomBadge from "../dashComponents/bottomZentask_C";
 import { ProjectProps } from "@/types/uData";
 import { PiPencil } from "react-icons/pi";
@@ -50,7 +50,7 @@ export default function Projects({ projectdata }: ProjectProps) {
 
         <div className="w-full h-max flex flex-col gap-3 mt-6">
           <span className="w-full h-max flex justify-between place-items-center">
-            <span>{projectdata.length} project(s)</span>
+            <span>{projectdata?.length} project(s)</span>
             <span className="w-max place-content-end place-items-center flex">
               <span onClick={() => setProjectHover(!projectHover)} className="p-2 cursor-pointer rounded-lg hover:bg-slate-100">Edit</span>
             </span>
@@ -60,7 +60,7 @@ export default function Projects({ projectdata }: ProjectProps) {
 
         <div className="w-full h-max flex flex-col mt-6">
 
-          {projectdata.map((project) => (
+          {projectdata?.map((project) => (
             <div
               className="w-full h-max flex flex-col cursor-pointer  hover:bg-slate-100 rounded-lg"
               key={project.id}

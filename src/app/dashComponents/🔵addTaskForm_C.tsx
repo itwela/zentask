@@ -52,6 +52,18 @@ export default function ZenAddTaskForm(
             }));
     };
 
+    // Handle textare change
+    const handleTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            taskdata: {
+                ...prevState.taskdata,
+                [name]: value
+                }
+            }));
+    };
+
     // Hndle date
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
@@ -122,14 +134,13 @@ export default function ZenAddTaskForm(
                 />
 
                 {/* Description */}
-                <input 
+                <textarea 
                     autoComplete="off"
-                    className="outline-none"
-                    type="text" 
+                    className="outline-none h-[100px]"
                     name="description"
                     id="description"
                     placeholder="Description"
-                    onChange={handleInputChange} 
+                    onChange={handleTextArea} 
                 />
 
                     
@@ -197,7 +208,6 @@ export default function ZenAddTaskForm(
                 <ZenLine />
 
                 <div className="flex gap-2 mt-5 justify-between">
-
                     {/* choose project */}
                     <Badge className="hover:bg-slate-100 flex place-items-center outline outline-[1px] rounded-lg px-3 w-1/4 outline-slate-300">
                         <select onChange={handleStatusChange} defaultValue={'Inbox'} id="project" name="project" className="w-full mr-2 bg-transparent h-full">

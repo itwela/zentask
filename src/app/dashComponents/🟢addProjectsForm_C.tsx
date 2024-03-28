@@ -30,7 +30,6 @@ export default function ZenAddProjectForm(
         projectdata: {
             id: '',
             name: '',
-            color: '',
             userId: ''
         }       
     });

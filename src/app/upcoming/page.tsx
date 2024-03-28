@@ -1,6 +1,6 @@
 'use client'
 
-import ZenAddTask from "../dashComponents/addTask_C";
+import ZenAddTask from "../dashComponents/🔵addTask_C";
 import ZenBottomBadge from "../dashComponents/bottomZentask_C";
 import ZenLine from "../dashComponents/line_C";
 
