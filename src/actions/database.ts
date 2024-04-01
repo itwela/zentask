@@ -50,7 +50,6 @@ export async function addSection(formData: FormData) {
   const formSectionName = formData.get('sectionname') as string;
   const formProject = formData.get('project') as string;
 
-  console.log('old project: ', formProject);
 
   let sectiondata: any = {
     userId: uId,
@@ -61,7 +60,6 @@ export async function addSection(formData: FormData) {
     sectiondata.projectId = formProject;
   }
 
-  console.log('new project: ', sectiondata.projectId);
 
   const apiAdd = await prisma?.section.create({
     data: sectiondata
@@ -77,9 +75,6 @@ export const updateSectionData = async (formData: FormData) => {
   const formSectionName = formData.get('sectionname') as string;
   const formProject = formData.get('project') as string;
 
-  console.log('the Name', formSectionName);
-  console.log('old project: ', formProject);
-
   let sectiondata: any = {
     userId: uId,
     name: formSectionName,
@@ -89,7 +84,6 @@ export const updateSectionData = async (formData: FormData) => {
     sectiondata.projectId = formProject;
   }
 
-  console.log('new project: ', sectiondata.projectId);
 
   const apiAdd = await prisma?.section.update({
     where: {
@@ -150,7 +144,6 @@ export async function addSectionTask(formData: FormData) {
     sectionTaskData.projectId = formProject;
   }
 
-  console.log('new project: ', sectionTaskData.projectId);
 
   const apiAdd = await prisma?.task.create({
       data: sectionTaskData 
@@ -193,7 +186,6 @@ export async function getProjectData() {
 export async function addProject(formData: FormData) {
   // noStore();
   const requestBody = formData;
-  console.log('the request body:', requestBody)   
   const uId = '1Itwela';
 
   const formProjectName = formData.get('name') as string;
@@ -216,7 +208,6 @@ export const deleteProjectData = async (formData: FormData) => {
   noStore();
 
   const projectId = formData.get('projectId') as string
-  console.log('projectId: ',projectId)
   const deleteProject = await prisma.project.delete({
     where: {
       id: projectId,
@@ -250,7 +241,6 @@ export async function getTodayTaskData() {
     },
   });
 
-  console.log(data)
   return data;
 }
 
@@ -310,7 +300,6 @@ export async function addTask(formData: FormData) {
     taskData.projectId = formProject;
   }
 
-  console.log('new project: ', taskData.projectId);
 
   const apiAdd = await prisma?.task.create({
       data: taskData 
@@ -327,7 +316,6 @@ export async function toggleTaskStatus(formData: FormData) {
     const formTaskId = formData.get('taskId') as string;
     const formTaskStatus = formData.get('taskStatus') as string;
     
-    console.log('the formTaskStatus: ', formTaskStatus)
     let taskData: any = {
       userId: uId,
     };

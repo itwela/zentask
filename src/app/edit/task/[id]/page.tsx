@@ -51,6 +51,7 @@ export default function EditTask({ taskdata, projectdata }: { taskdata: any, pro
             completed: false,
             priority: '',
             projectId: '',
+            sectionId: '',
             createdAt: '',
             updeatedAt: '',
         }
@@ -198,14 +199,14 @@ export default function EditTask({ taskdata, projectdata }: { taskdata: any, pro
                                             </span>
                                             {/* date */}
                                             <span className="flex gap-1 flex-col">
-                                                <span className="py-2  px-3 w-full  "><span className="font-bold">Due Date</span> - {filteredTask.duedate}</span>
+                                                <span className="py-2  px-3 w-full  "><span className="font-bold">Due Date</span></span>
                                                 <Badge className="hover:bg-slate-200 py-2  rounded-lg p-1">
                                                     <input type="hidden" name="duedate" value={dayjs(datevalue).format('YYYY-MM-DD')} />
                                                     <span
                                                         id="duedate"
                                                         className='outline-none rounded-full w-max cursor-pointer'>
                                                         <span className=" p-2 rounded-full" aria-describedby={id} onClick={handleClick}>
-                                                            due date
+                                                            {filteredTask.duedate ? dayjs(filteredTask.duedate).format('DD/MM/YYYY') : 'No Due Date'}
                                                         </span>
                                                         <Popover
                                                             id={id}
@@ -240,7 +241,7 @@ export default function EditTask({ taskdata, projectdata }: { taskdata: any, pro
                                             </span>
                                             {/* priority  */}
                                             <span className="flex gap-1 flex-col">
-                                            <span className="py-2 px-3 w-full  "><span className="font-bold ">Priority</span> - {filteredTask.priority}</span>
+                                            <span className="py-2 px-3 w-full  "><span className="font-bold ">Priority</span></span>
                                                 <Badge className="hover:bg-slate-200 py-2  rounded-lg p-1 ">
                                                     <select defaultValue={filteredTask.priority as string} onChange={handleStatusChange} id="priority" name="priority" className="bg-transparent w-full">
                                                         <option value="">priority</option>

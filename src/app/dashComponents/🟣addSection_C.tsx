@@ -82,7 +82,7 @@ export default function ZenAddSection({projectdata}: {projectdata: ZenProject[] 
                             {/* choose project */}
                             <Badge className="hover:bg-slate-100 flex place-items-center outline outline-[1px] rounded-lg px-3 w-1/4 outline-slate-300">
                                 <select onChange={handleStatusChange} defaultValue={'Inbox'} id="project" name="project" className="w-full mr-2 bg-transparent h-full">
-                                    <option value="Inbox">Inbox</option> 
+                                    <option value="Inbox">Home</option> 
                                     {projectdata?.map((project) => (
                                         <option key={project.id} value={project.id as string}>{project.name}</option>
                                     ))}

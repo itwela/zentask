@@ -80,9 +80,6 @@ export default function Home({taskdata, projectdata, sectiondata, thoughtdata, q
   });
 
   // 🟣
-  const [showSectionTask, setShowSectionTask] = useState(false);
-
-  // 🟣
   const handleSectionInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prevState => ({
@@ -105,7 +102,14 @@ export default function Home({taskdata, projectdata, sectiondata, thoughtdata, q
     setsectionEdit(false);
   } 
 
-  const [showSectionTasks, setShowSectionTasks] = useState(true);
+  const [showSectionTasks, setShowSectionTasks] = useState(false);
+  const [currentSectionId, setCurrentSectionId] = useState<string | null>(null);
+
+  const handleSectionTasksToggle = (sectaskId: string) => {
+    setCurrentSectionId(sectaskId);  
+    setShowSectionTasks(!showSectionTasks);
+  }
+  
   const sectiontasks = taskdata.filter((task: any) => task.sectionId)
 
 // 🟣🟣 end edit button --------
@@ -210,7 +214,7 @@ const handleThoughtInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             </div>
 
             {/* Render All tasks */}
-            <span className="w-full mt-3 justify-between place-items-center flex">
+            <span className="w-full my-3 justify-between place-items-center flex">
               <span className="font-bold">Tasks</span>
               <span onClick={() => settaskEdit(!taskEdit)} className="p-2 cursor-pointer rounded-lg hover:bg-slate-100">Edit</span>
             </span>
@@ -342,60 +346,56 @@ const handleThoughtInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                       <div className="flex flex-col w-full py-3 cursor-pointer gap-2 place-items-center justify-between">
                        
                         <span className="flex place-items-center w-full gap-2">
-                          {!showSectionTasks && (
-                            <IoIosArrowForward onClick={() => setShowSectionTasks(true)} className="hover:bg-slate-100 p-2 rounded-lg" size={25} />
-                          )}
 
-                          {showSectionTasks && (
-                            <IoIosArrowDown onClick={() => setShowSectionTasks(false)} className="hover:bg-slate-100 p-2 rounded-lg" size={25} />
-                          )}
+                          <IoIosArrowForward onClick={() => handleSectionTasksToggle(section.id)} className="hover:bg-slate-100 p-2 rounded-lg" size={25} />
+
                           <span onClick={() => handleSecFormOpen(section.id)} className="flex flex-col gap-2 place-items-start w-full">
                             <h3 className="font-bold">{section.name}</h3>
                           </span>
 
-                                                {/* Section edit options */}
-                      {sectionEdit && (
-                        <span className="flex gap-2 place-items-center">
-                          <PiPencil
-                            onClick={() => handleSecFormOpen(section.id)}
-                            className="hover:bg-slate-100 p-2 rounded-lg"
-                            size={25}
-                          />
+                           {/* Section edit options */}
+                          {sectionEdit && (
+                            <span className="flex gap-2 place-items-center">
+                              <PiPencil
+                                onClick={() => handleSecFormOpen(section.id)}
+                                className="hover:bg-slate-100 p-2 rounded-lg"
+                                size={25}
+                              />
 
-                          <span className="" onClick={handleClick}>
-                            <BsThreeDots className="hover:bg-slate-100 p-2 rounded-lg" size={25} />
-                          </span>
-                          <Popover
-                            open={open}
-                            onClose={handleClose}
-                            anchorEl={anchorEl}
-                            anchorOrigin={{
-                              vertical: 'bottom',
-                              horizontal: 'right',
-                            }}
-                            transformOrigin={{
-                              vertical: 'top',
-                              horizontal: 'right',
-                            }}
-                          >
-                            <span className="flex flex-col place-items-center">
-                              <span className="w-[150px] flex flex-col p-3">
-                                <span className="p-2 w-full flex place-items-start cursor-pointer hover:bg-slate-100" onClick={() => handleSecFormOpen(section.id)}>Update</span>
-                                <form action={deleteSectionData}>
-                                  <input type="hidden" name="sectionId" value={section.id} />
-                                  <button className="p-2 w-full flex place-items-start cursor-pointer text-red-500 hover:bg-slate-100" onClick={() => handleClose()}>Delete</button>
-                                </form>
+                              <span className="" onClick={handleClick}>
+                                <BsThreeDots className="hover:bg-slate-100 p-2 rounded-lg" size={25} />
                               </span>
+                              <Popover
+                                open={open}
+                                onClose={handleClose}
+                                anchorEl={anchorEl}
+                                anchorOrigin={{
+                                  vertical: 'bottom',
+                                  horizontal: 'right',
+                                }}
+                                transformOrigin={{
+                                  vertical: 'top',
+                                  horizontal: 'right',
+                                }}
+                              >
+                                <span className="flex flex-col place-items-center">
+                                  <span className="w-[150px] flex flex-col p-3">
+                                    <span className="p-2 w-full flex place-items-start cursor-pointer hover:bg-slate-100" onClick={() => handleSecFormOpen(section.id)}>Update</span>
+                                    <form action={deleteSectionData}>
+                                      <input type="hidden" name="sectionId" value={section.id} />
+                                      <button className="p-2 w-full flex place-items-start cursor-pointer text-red-500 hover:bg-slate-100" onClick={() => handleClose()}>Delete</button>
+                                    </form>
+                                  </span>
+                                </span>
+                              </Popover>
+
+
                             </span>
-                          </Popover>
-
-
-                        </span>
-                      )}
+                          )}
                         </span>
 
                         {/* show section tasks */}
-                          {showSectionTasks && (
+                          {showSectionTasks && currentSectionId === section.id && (
                             <div className="flex w-full place-items-start py-3 place-content-start hover:bg-slate-100 rounded-lg">
                               {sectiontasks.map((task: ZenTask, index: number) => ( 
                               <>
@@ -509,11 +509,11 @@ const handleThoughtInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                                 <div className="flex gap-3">
                                   {/* Render individual section details here */}
                                   <div
-                                    className="flex w-full py-3 cursor-pointer gap-2 place-items-center justify-between"
+                                    className="flex w-full py-3 hover:bg-slate-100 cursor-pointer gap-2 place-items-center justify-between"
                                   >
                                     <span className="flex place-items-center w-full gap-2">
                                       <span onClick={() => handleThoughtFormOpen(thought.id)} className="flex flex-col gap-2 place-items-start w-full">
-                                        <h3 className="pl-4 font-bold">{thought.name}</h3>
+                                        <h3 className="pl-4">- {thought.name}</h3>
                                       </span>
                                     </span>
 
@@ -626,11 +626,11 @@ const handleThoughtInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                                 <div className="flex gap-3">
                                   {/* Render individual quote details here */}
                                   <div
-                                    className="flex w-full py-3 cursor-pointer gap-2 place-items-center justify-between"
+                                    className="flex hover:bg-slate-100 w-full py-3 cursor-pointer gap-2 place-items-center justify-between"
                                   >
                                     <span className="flex place-items-center w-full gap-2">
                                       <span onClick={() => handleQuoteFormOpen(quote.id)} className="flex flex-col gap-2 place-items-start w-full">
-                                        <h3 className="pl-4 font-bold">{quote.name}</h3>
+                                        <h3 className="pl-4">"{quote.name}"</h3>
                                       </span>
                                     </span>
 
