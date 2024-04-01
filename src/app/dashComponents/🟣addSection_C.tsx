@@ -64,13 +64,13 @@ export default function ZenAddSection({projectdata}: {projectdata: ZenProject[] 
                  <form action={addSection} className="flex flex-col">
                      {/* input fields */}
                      
-                     {/* Task */}
+                     {/* Section */}
                      <input 
                          autoComplete="off"
                          className="outline-none text-2xl bg-transparent"
                          type="text" 
-                         name="name"
-                         id="name"
+                         name="sectionname"
+                         id="sectionname"
                          placeholder="Section Name"
                          onChange={handleInputChange} 
                          required
@@ -95,7 +95,7 @@ export default function ZenAddSection({projectdata}: {projectdata: ZenProject[] 
                      </div>
  
                  </form>
-             </div>
+                 </div>
             )}
         </>
     )

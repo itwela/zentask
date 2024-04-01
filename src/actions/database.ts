@@ -46,7 +46,7 @@ export async function addSection(formData: FormData) {
   noStore();
   const requestBody = formData;
   
-  const formSectionName = formData.get('name') as string;
+  const formSectionName = formData.get('sectionname') as string;
   const formProject = formData.get('project') as string;
 
   console.log('old project: ', formProject);
@@ -69,10 +69,11 @@ export async function addSection(formData: FormData) {
   revalidatePath("/");
 }
 
+//  this updates section
 export const updateSectionData = async (formData: FormData) => {
   
   const sectionId = formData.get('sectionId') as string
-  const formSectionName = formData.get('name') as string;
+  const formSectionName = formData.get('sectionname') as string;
   const formProject = formData.get('project') as string;
 
   console.log('the Name', formSectionName);
@@ -99,9 +100,6 @@ export const updateSectionData = async (formData: FormData) => {
   revalidatePath("/");
 
 }
-
-
-//  this updates section
 
 //  this deletes section
 export const deleteSectionData = async (formData: FormData) => {
@@ -379,7 +377,162 @@ export async function getSubtaskData() {
   return data;
 }
 
+// END SUBTASK STUFF ------------------------------------------------
 
 
+//  ---------------- thoughts functions -----------------------------------------------
+
+//  this gets thoughts Data
+export async function getThoughtsData() {
+  noStore();
+  const data = await prisma.thought.findMany({
+    where: {
+      userId: uId
+  },
+  orderBy: {
+      createdAt: 'desc'
+  },
+});
+  
+  return data;
+}
+
+//  this adds thoughts
+export async function addThoughts(formData: FormData) {
+  noStore();
+  const requestBody = formData;
+  
+  const formSectionName = formData.get('thoughtname') as string;
+
+  let thoughtdata: any = {
+    userId: uId,
+    name: formSectionName,
+  };
+
+  const apiAdd = await prisma?.thought.create({
+    data: thoughtdata
+  });
+
+  revalidatePath("/");
+}
+
+//  this updates thoughts
+export const updateThoughtsData = async (formData: FormData) => {
+  
+  const thoughtId = formData.get('thoughtId') as string
+  const formThoughtName = formData.get('thoughtname') as string;
 
 
+  let thoughtdata: any = {
+    userId: uId,
+    name: formThoughtName,
+  };
+
+
+  const apiAdd = await prisma?.thought.update({
+    where: {
+      id: thoughtId,
+    },
+    data: thoughtdata  
+  });
+
+  revalidatePath("/");
+
+}
+
+//  this deletes thoughts
+export const deleteThoughtsData = async (formData: FormData) => {
+  noStore();
+
+  const thoughtId = formData.get('thoughtId') as string
+
+  // Delete the section itself
+  await prisma.thought.delete({
+    where: {
+      id: thoughtId,
+    },
+  });
+
+  revalidatePath('/');
+}
+
+// END THOUGHTS STUFF ------------------------------------------------
+
+
+//  ---------------- quotes functions -----------------------------------------------
+
+//  this gets quotes Data
+export async function getQuotesData() {
+  noStore();
+  const data = await prisma.quote.findMany({
+    where: {
+      userId: uId
+  },
+  orderBy: {
+      createdAt: 'desc'
+  },
+});
+  
+  return data;
+}
+
+//  this adds quotes
+export async function addQuotes(formData: FormData) {
+  noStore();
+  const requestBody = formData;
+  
+  const formQuoteName = formData.get('name') as string;
+
+
+  let quotedata: any = {
+    userId: uId,
+    name: formQuoteName,
+  };
+
+
+  const apiAdd = await prisma?.quote.create({
+    data: quotedata
+  });
+
+  revalidatePath("/");
+}
+
+//  this updates quotes
+export const updateQuotesData = async (formData: FormData) => {
+  
+  const quoteId = formData.get('sectionId') as string
+  const formQuoteName = formData.get('name') as string;
+
+  let quotedata: any = {
+    userId: uId,
+    name: formQuoteName,
+  };
+
+  const apiAdd = await prisma?.quote.update({
+    where: {
+      id: quoteId,
+    },
+    data: quotedata  
+  });
+
+  revalidatePath("/");
+
+}
+
+//  this deletes thoughts
+export const deleteQuotesData = async (formData: FormData) => {
+  noStore();
+
+  const quoteId = formData.get('quoteId') as string
+
+  // Delete the section itself
+  await prisma.quote.delete({
+    where: {
+      id: quoteId,
+    },
+  });
+
+  revalidatePath('/');
+}
+
+// END QUOTES STUFF ------------------------------------------------

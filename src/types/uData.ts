@@ -34,6 +34,22 @@ export interface ZenTask {
   updeatedAt: string | null;
 }
 
+export interface ZenThoughts {
+  id: string;
+  name: string | null;
+  content: string | null;
+  createdAt: string | null;
+  updeatedAt: string | null;
+}
+
+export interface ZenQuotes {
+  id: string;
+  name: string | null;
+  content: string | null;
+  createdAt: string | null;
+  updeatedAt: string | null;
+}
+
 export interface ZenSubtask {
   id: string;
   name: string | null;
