@@ -53,8 +53,8 @@ export default function ZenAddQuote() {
                     <textarea 
                         autoComplete="off"
                         className="outline-none text-2xl bg-transparent min-h-[100px]"
-                        name="name"
-                        id="name"
+                        name="quote"
+                        id="quote"
                         placeholder="Feeling Inspired?"
                         onChange={handleInputChange} 
                         required

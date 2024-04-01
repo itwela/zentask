@@ -2,6 +2,7 @@
 
 import prisma from "@/libs/db";
 import { auth, currentUser } from "@clerk/nextjs";
+import { get } from "http";
 import { unstable_noStore as noStore, revalidatePath } from "next/cache";
 import { FONT_MANIFEST } from "next/dist/shared/lib/constants";
 
@@ -24,9 +25,9 @@ export async function getUserData() {
 
 // 
 
-// ------------------ section functions -------------------------------------------------------
+// 🟣🟣🟣 ------------------ section functions -------------------------------------------------------
 
-//  this gets section Data
+// 🟣 this gets section Data
 export async function getSectionData() {
   noStore();
   const data = await prisma.section.findMany({
@@ -41,7 +42,7 @@ export async function getSectionData() {
   return data;
 }
 
-//  this adds section
+// 🟣 this adds section
 export async function addSection(formData: FormData) {
   noStore();
   const requestBody = formData;
@@ -69,7 +70,7 @@ export async function addSection(formData: FormData) {
   revalidatePath("/");
 }
 
-//  this updates section
+// 🟣 this updates section
 export const updateSectionData = async (formData: FormData) => {
   
   const sectionId = formData.get('sectionId') as string
@@ -101,7 +102,7 @@ export const updateSectionData = async (formData: FormData) => {
 
 }
 
-//  this deletes section
+// 🟣 this deletes section
 export const deleteSectionData = async (formData: FormData) => {
   noStore();
 
@@ -124,7 +125,7 @@ export const deleteSectionData = async (formData: FormData) => {
   revalidatePath('/');
 }
 
-// this is the function to add tasks to the database based on user
+// 🟣 this is the function to add tasks to the database based on user
 export async function addSectionTask(formData: FormData) {
   noStore();
   const requestBody = formData;
@@ -158,6 +159,7 @@ export async function addSectionTask(formData: FormData) {
   revalidatePath("/");
 }
 
+// 🟣 this updates section tasks
 export const updateSectionTaskData = async (formData: FormData) => {
   
   const sectionId = formData.get('sectionId') as string
@@ -166,13 +168,13 @@ export const updateSectionTaskData = async (formData: FormData) => {
 }
 
 
-// END SECTION STUFF ------------------------------------------------
+// 🟣🟣🟣 END SECTION STUFF ------------------------------------------------
 
 // 
 
-// ------------------ project functions -------------------------------------------------------
+//🟢🟢🟢 ------------------ project functions -------------------------------------------------------
 
-//  this gets Project Data
+// 🟢 this gets Project Data
 export async function getProjectData() {
   noStore();
   const data = await prisma.project.findMany({
@@ -187,7 +189,7 @@ export async function getProjectData() {
   return data;
 }
 
-// this is the function to add projects to the database based on user
+//🟢 this is the function to add projects to the database based on user
 export async function addProject(formData: FormData) {
   // noStore();
   const requestBody = formData;
@@ -209,6 +211,7 @@ export async function addProject(formData: FormData) {
     revalidatePath("/")       
 }
 
+// 🟢 this deletes projects
 export const deleteProjectData = async (formData: FormData) => {
   noStore();
 
@@ -223,13 +226,13 @@ export const deleteProjectData = async (formData: FormData) => {
   revalidatePath('/')
 }
 
-// END PROJECT STUFF ------------------------------------------------
+// 🟢🟢🟢 END PROJECT STUFF ------------------------------------------------
 
 // 
 
-// ------------------ task functions -------------------------------------------------------
+// 🔵🔵🔵 ------------------ task functions -------------------------------------------------------
 
-// this gets todays task data
+//🔵 this gets todays task data
 export async function getTodayTaskData() {
   noStore();
   const currentDate = new Date().toISOString(); // Get current date and time in ISO format
@@ -251,7 +254,7 @@ export async function getTodayTaskData() {
   return data;
 }
 
-//  this gets alltask Data
+//🔵  this gets alltask Data
 export async function getTaskData() {
   noStore();
   const data = await prisma.task.findMany({
@@ -266,18 +269,21 @@ export async function getTaskData() {
   return data;
 }
 
-// this is the function to add tasks to the database based on user
+//🔵 this is the function to add tasks to the database based on user
 export async function addTask(formData: FormData) {
   noStore();
   const requestBody = formData;
   
+  const theSections = await getSectionData();
+  const theSectionIds = theSections.map((section: any) => section.id);
+
+
   const formTaskName = formData.get('name') as string;
   const formDescription = formData.get('description') as string;
   const formDueDate = formData.get('duedate') as string;
   const formPriority = formData.get('priority') as string;
   const formProject = formData.get('project') as string;
-
-  console.log('old project: ', formProject);
+  const formSection = formData.get('section') as string;
 
   let taskData: any = {
     userId: uId,
@@ -287,7 +293,20 @@ export async function addTask(formData: FormData) {
     priority: formPriority,
   };
 
+  // choose project logic
   if (formProject != "Inbox") {
+    taskData.projectId = formProject;
+  }
+
+  // choose project logic
+  if (formSection != "Inbox") {
+    taskData.sectionId = formSection;
+  }
+
+  // if the project is in the list of sections
+
+  // choose section logic
+  if (formProject !== "Inbox" && !theSectionIds.includes(formProject)) {
     taskData.projectId = formProject;
   }
 
@@ -300,6 +319,41 @@ export async function addTask(formData: FormData) {
   revalidatePath("/");
 }
 
+// 🔵 this toogles task status
+export async function toggleTaskStatus(formData: FormData) {
+  noStore();
+
+  try {  
+    const formTaskId = formData.get('taskId') as string;
+    const formTaskStatus = formData.get('taskStatus') as string;
+    
+    console.log('the formTaskStatus: ', formTaskStatus)
+    let taskData: any = {
+      userId: uId,
+    };
+  
+    if (formTaskStatus === 'completed') {
+      taskData.completed = true;
+    } else {
+      taskData.completed = false;
+    }
+  
+    const apiAdd = await prisma?.task.update({
+  
+      where: {
+          id: formTaskId,
+      },
+      data: taskData
+  })
+  
+    revalidatePath("/")
+  } catch (error) {
+    revalidatePath("/")
+  }
+
+}
+
+// 🔵 this is the function to update tasks to the database based on user
 export const updateTaskData = async (formData: FormData, sectionId?: string, projectId?: string) => {
   noStore();
 
@@ -339,7 +393,7 @@ export const updateTaskData = async (formData: FormData, sectionId?: string, pro
 
 }
 
-//  this is the function to delete jobs
+// 🔵 this is the function to delete tasks
 export const deleteTaskData = async (formData: FormData) => {
   noStore();
 
@@ -356,13 +410,13 @@ export const deleteTaskData = async (formData: FormData) => {
 
 }
 
-// END TASK STUFF ------------------------------------------------
+// 🔵🔵🔵 END TASK STUFF ------------------------------------------------
 
 // 
 
-// ---------------- subtask functions -----------------------------------------------
+// ⚪⚪⚪ ---------------- subtask functions -----------------------------------------------
 
-//  this gets task Data
+// ⚪  this gets task Data
 export async function getSubtaskData() {
   noStore();
   const data = await prisma.subtask.findMany({
@@ -377,12 +431,12 @@ export async function getSubtaskData() {
   return data;
 }
 
-// END SUBTASK STUFF ------------------------------------------------
+// ⚪⚪⚪ END SUBTASK STUFF ------------------------------------------------
 
 
-//  ---------------- thoughts functions -----------------------------------------------
+// 🟠🟠🟠  ---------------- thoughts functions -----------------------------------------------
 
-//  this gets thoughts Data
+// 🟠  this gets thoughts Data
 export async function getThoughtsData() {
   noStore();
   const data = await prisma.thought.findMany({
@@ -397,7 +451,7 @@ export async function getThoughtsData() {
   return data;
 }
 
-//  this adds thoughts
+// 🟠 this adds thoughts
 export async function addThoughts(formData: FormData) {
   noStore();
   const requestBody = formData;
@@ -416,7 +470,7 @@ export async function addThoughts(formData: FormData) {
   revalidatePath("/");
 }
 
-//  this updates thoughts
+// 🟠 this updates thoughts
 export const updateThoughtsData = async (formData: FormData) => {
   
   const thoughtId = formData.get('thoughtId') as string
@@ -440,7 +494,7 @@ export const updateThoughtsData = async (formData: FormData) => {
 
 }
 
-//  this deletes thoughts
+// 🟠 this deletes thoughts
 export const deleteThoughtsData = async (formData: FormData) => {
   noStore();
 
@@ -456,12 +510,12 @@ export const deleteThoughtsData = async (formData: FormData) => {
   revalidatePath('/');
 }
 
-// END THOUGHTS STUFF ------------------------------------------------
+// 🟠🟠🟠 END THOUGHTS STUFF ------------------------------------------------
 
 
-//  ---------------- quotes functions -----------------------------------------------
+// 🟡🟡🟡  ---------------- quotes functions -----------------------------------------------
 
-//  this gets quotes Data
+// 🟡  this gets quotes Data
 export async function getQuotesData() {
   noStore();
   const data = await prisma.quote.findMany({
@@ -476,12 +530,12 @@ export async function getQuotesData() {
   return data;
 }
 
-//  this adds quotes
+// 🟡 this adds quotes
 export async function addQuotes(formData: FormData) {
   noStore();
   const requestBody = formData;
   
-  const formQuoteName = formData.get('name') as string;
+  const formQuoteName = formData.get('quote') as string;
 
 
   let quotedata: any = {
@@ -497,11 +551,11 @@ export async function addQuotes(formData: FormData) {
   revalidatePath("/");
 }
 
-//  this updates quotes
+// 🟡 this updates quotes
 export const updateQuotesData = async (formData: FormData) => {
   
-  const quoteId = formData.get('sectionId') as string
-  const formQuoteName = formData.get('name') as string;
+  const quoteId = formData.get('quoteId') as string
+  const formQuoteName = formData.get('quote') as string;
 
   let quotedata: any = {
     userId: uId,
@@ -519,7 +573,7 @@ export const updateQuotesData = async (formData: FormData) => {
 
 }
 
-//  this deletes thoughts
+// 🟡 this deletes thoughts
 export const deleteQuotesData = async (formData: FormData) => {
   noStore();
 
@@ -535,4 +589,4 @@ export const deleteQuotesData = async (formData: FormData) => {
   revalidatePath('/');
 }
 
-// END QUOTES STUFF ------------------------------------------------
+// 🟡🟡🟡 END QUOTES STUFF ------------------------------------------------

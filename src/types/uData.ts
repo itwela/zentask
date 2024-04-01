@@ -29,7 +29,9 @@ export interface ZenTask {
   description: string | null;
   duedate: string | null;
   priority: string | null;
+  completed: boolean | undefined;
   projectId: string | null;
+  sectionId: string | null;
   createdAt: string | null;
   updeatedAt: string | null;
 }
