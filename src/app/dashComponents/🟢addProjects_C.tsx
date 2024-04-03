@@ -22,7 +22,6 @@ export default function ZenAddProject() {
         projectdata: {
             id: '',
             name: '',
-            color: '',
             userId: ''
         }       
     });

@@ -6,7 +6,7 @@ import Projects from './page';
 
 export default async function ProjectsS() {
 
-  const projectdata = await getProjectData('1Itwela');
+  const projectdata = await getProjectData();
 
   return (
 

@@ -1,14 +1,13 @@
-'use client'
+
 
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import ZenAddTaskForm from './addTaskForm_C';
+import ZenAddTaskForm from './🔵addTaskForm_C';
 import { getUserData } from '@/actions/database';
 import { ProjectProps } from "@/types/uData";
-import ZenAddProjectForm from './addProjectsForm_C';
 
 
 const style = {
@@ -22,17 +21,14 @@ const style = {
   p: 2,
 };
 
-export default function ZenAddProjectModal({projectdata}: any) {
+export default function ZenAddTaskModal({projectdata}: any) {
   const [modalopen, setmodalOpen] = React.useState(false);
   const handleModalOpen = () => setmodalOpen(true);
   const handleModalClose = () => setmodalOpen(false);
 
   return (
     <div>
-      <button onClick={handleModalOpen} className='flex gap-2 flex-col'>
-        <span className="font-bold"># Add Project</span>
-        <span className="text-stone-400 text-xs">Plan and manage tasks</span>
-      </button>      
+      <button onClick={handleModalOpen}>Add Task</button>
       <Modal
         open={modalopen}
         onClose={handleModalClose}
@@ -41,7 +37,7 @@ export default function ZenAddProjectModal({projectdata}: any) {
         className=''
       >
         <Box sx={style}>
-            <ZenAddProjectForm projectdata={projectdata} modalopen={modalopen} handleModalClose={handleModalClose}/>
+            <ZenAddTaskForm projectdata={projectdata} modalopen={modalopen} handleModalClose={handleModalClose}/>
         </Box>
       </Modal>
     </div>

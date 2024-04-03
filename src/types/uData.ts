@@ -10,14 +10,17 @@ export interface ZenUser {
 export interface ZenProject {
   id: string;
   name: string | null;
-  color: string | null;
   userId: string;
+  projectId?: string | null;
 }
 
 export interface ZenSection {
   id: string;
+  userId: string;
   name: string | null;
-  projectId: string;
+  projectId?: string;
+  createdAt: string | null;
+  updeatedAt: string | null;
 }
 
 export interface ZenTask {
@@ -26,7 +29,25 @@ export interface ZenTask {
   description: string | null;
   duedate: string | null;
   priority: string | null;
+  completed: boolean | undefined;
   projectId: string | null;
+  sectionId: string | null;
+  createdAt: string | null;
+  updeatedAt: string | null;
+}
+
+export interface ZenThoughts {
+  id: string;
+  name: string | null;
+  content: string | null;
+  createdAt: string | null;
+  updeatedAt: string | null;
+}
+
+export interface ZenQuotes {
+  id: string;
+  name: string | null;
+  content: string | null;
   createdAt: string | null;
   updeatedAt: string | null;
 }
@@ -49,7 +70,7 @@ export type UserProps = {
 }
 
 export type ProjectProps = {
-  projectdata: ZenProject[]
+  projectdata: ZenProject[] | null;
 }
 
 export type SectionProps = {

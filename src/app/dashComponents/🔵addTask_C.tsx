@@ -10,7 +10,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateCalendar } from "@mui/x-date-pickers";
 import ZenLine from './line_C';
-import { ZenProject, ZenTask } from '@/types/uData';
+import { ZenProject, ZenSection, ZenTask } from '@/types/uData';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs/AdapterDayjs';
 
 
@@ -18,7 +18,10 @@ interface FormData {
     taskdata: ZenTask
 }
 
-export default function ZenAddTask({projectdata, today, tommorrow}: {today: boolean; tommorrow: boolean; projectdata: any}) {
+export default function ZenAddTask({projectdata, sectiondata, today, tommorrow}: {today: boolean; tommorrow: boolean; projectdata: any; sectiondata: any;}) {
+    
+    
+    console.log(sectiondata)
     const [taskOpen, setTaskopen] = React.useState(false);
     const handleTaskOpen = () => setTaskopen(!taskOpen);
     const handleTaskClose = () => setTaskopen(false);
@@ -28,9 +31,11 @@ export default function ZenAddTask({projectdata, today, tommorrow}: {today: bool
             id: '',
             name: '',
             description: '',
+            completed: false,
             duedate: '',
             priority: '', 
             projectId: null,
+            sectionId: null,
             createdAt: '',
             updeatedAt: '',
         }       
@@ -45,6 +50,18 @@ export default function ZenAddTask({projectdata, today, tommorrow}: {today: bool
                 ...prevState.taskdata,
                 [name]: value
               }
+            }));
+    };
+
+    // Handle input change
+    const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            taskdata: {
+                ...prevState.taskdata,
+                [name]: value
+                }
             }));
     };
 
@@ -93,6 +110,7 @@ export default function ZenAddTask({projectdata, today, tommorrow}: {today: bool
         console.log(formData);
     }
 
+
     return (
         <>
         <div className='flex flex-col gap-5'>
@@ -118,14 +136,13 @@ export default function ZenAddTask({projectdata, today, tommorrow}: {today: bool
                     />
 
                     {/* Description */}
-                    <input 
+                    <textarea 
                         autoComplete="off"
-                        className="outline-none bg-transparent"
-                        type="text" 
+                        className="outline-none bg-transparent h-[100px]"
                         name="description"
                         id="description"
                         placeholder="Description"
-                        onChange={handleInputChange} 
+                        onChange={handleTextAreaChange} 
                     />
 
                         
@@ -199,15 +216,29 @@ export default function ZenAddTask({projectdata, today, tommorrow}: {today: bool
 
                     <div className="flex gap-2 mt-5 justify-between">
 
-                        {/* choose project */}
-                        <Badge className="hover:bg-slate-100 flex place-items-center place-content-center outline outline-[1px] rounded-lg px-3 w-1/4 outline-slate-300">
-                            <select onChange={handleStatusChange} defaultValue={'Inbox'} id="project" name="project" className="w-full h-full  bg-transparent">
-                                <option value="Inbox">Inbox</option>
-                                {projectdata?.map((project: any) => (
-                                <option key={project.id} value={project.id as string}>{project.name}</option>
-                            ))}
-                            </select>
-                        </Badge>          
+                        {/* choose project and section */}
+                        <div className='flex gap-2 w-1/2'>
+
+                            {/* choose project */}
+                            <Badge className="hover:bg-slate-100 flex place-items-center place-content-center outline outline-[1px] rounded-lg px-3 w-1/2 outline-slate-300">
+                                <select onChange={handleStatusChange} defaultValue={'Inbox'} id="project" name='project' className="w-full h-full  bg-transparent">
+                                    <option value="Inbox">projects</option>
+                                    {projectdata?.map((project: ZenProject) => (
+                                        <option key={project.id} value={project.id as string}>{project.name}</option>
+                                    ))}
+                                </select>
+                            </Badge>
+                        
+                            {/* choose section */}
+                            <Badge className="hover:bg-slate-100 flex place-items-center place-content-center outline outline-[1px] rounded-lg px-3 w-1/2 outline-slate-300">
+                                <select onChange={handleStatusChange} defaultValue={'Inbox'} id="section" name='section' className="w-full h-full  bg-transparent">
+                                    <option value="Inbox">sections</option>
+                                    {sectiondata?.map((section: ZenSection) => (
+                                        <option key={section.id} value={section.id as string}>{section.name}</option>
+                                    ))}
+                                </select>
+                            </Badge>
+                        </div>       
 
                         <span className="flex gap-4">
                             <button type="submit" className="bg-slate-100 hover:bg-slate-200 p-2 py-3 rounded-lg"  onClick={handleTaskClose}>Cancel</button>
