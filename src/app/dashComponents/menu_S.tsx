@@ -14,7 +14,7 @@ export async function ZenMenuS() {
   
   return (
     <>
-      <nav className="hidden sm:flex  w-[200px] h-full">
+      <nav className="flex  w-max h-full">
 
         <ZenMenuClient userdata={userdata} todaystaskdata={todaystaskdata} taskdata={taskdata} projectdata={projectdata} />
 

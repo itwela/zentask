@@ -6,15 +6,17 @@ import { get } from "http";
 import { unstable_noStore as noStore, revalidatePath } from "next/cache";
 import { FONT_MANIFEST } from "next/dist/shared/lib/constants";
 
-const uId = '1Itwela';
+let uId = '';
 
 
 //  this gets userData
 export async function getUserData() {
     noStore();
+    const theUser = await currentUser();
+    const theUserId = theUser?.id;  
     const data = prisma.user.findUnique({
       where: {
-        id: uId
+        id: theUserId
       },
     });
     
@@ -29,10 +31,13 @@ export async function getUserData() {
 
 // 🟣 this gets section Data
 export async function getSectionData() {
-  noStore();
+  noStore();  
+  const theUser = await currentUser();
+  const theUserId = theUser?.id;
+
   const data = await prisma.section.findMany({
     where: {
-      userId: uId
+      userId: theUserId
   },
   orderBy: {
       createdAt: 'desc'
@@ -44,7 +49,10 @@ export async function getSectionData() {
 
 // 🟣 this adds section
 export async function addSection(formData: FormData) {
-  noStore();
+  noStore(); 
+  const theUser = await currentUser();
+  const theUserId = theUser?.id;
+ 
   const requestBody = formData;
   
   const formSectionName = formData.get('sectionname') as string;
@@ -52,7 +60,7 @@ export async function addSection(formData: FormData) {
 
 
   let sectiondata: any = {
-    userId: uId,
+    userId: theUserId,
     name: formSectionName,
   };
 
@@ -70,13 +78,16 @@ export async function addSection(formData: FormData) {
 
 // 🟣 this updates section
 export const updateSectionData = async (formData: FormData) => {
-  
+  noStore();  
+  const theUser = await currentUser();
+  const theUserId = theUser?.id;
+
   const sectionId = formData.get('sectionId') as string
   const formSectionName = formData.get('sectionname') as string;
   const formProject = formData.get('project') as string;
 
   let sectiondata: any = {
-    userId: uId,
+    userId: theUserId,
     name: formSectionName,
   };
 
@@ -98,8 +109,7 @@ export const updateSectionData = async (formData: FormData) => {
 
 // 🟣 this deletes section
 export const deleteSectionData = async (formData: FormData) => {
-  noStore();
-
+  noStore();  
   const sectionId = formData.get('sectionId') as string
 
   // Delete all found tasks
@@ -121,7 +131,10 @@ export const deleteSectionData = async (formData: FormData) => {
 
 // 🟣 this is the function to add tasks to the database based on user
 export async function addSectionTask(formData: FormData) {
-  noStore();
+  noStore();  
+  const theUser = await currentUser();
+  const theUserId = theUser?.id;
+
   const requestBody = formData;
   
   const formSectionId = formData.get('sectionId') as string
@@ -132,7 +145,7 @@ export async function addSectionTask(formData: FormData) {
   const formProject = formData.get('project') as string;
 
   let sectionTaskData: any = {
-    userId: uId,
+    userId: theUserId,
     sectionId: formSectionId, 
     name: formTaskName,
     description: formDescription,
@@ -154,7 +167,7 @@ export async function addSectionTask(formData: FormData) {
 
 // 🟣 this updates section tasks
 export const updateSectionTaskData = async (formData: FormData) => {
-  
+  noStore();  
   const sectionId = formData.get('sectionId') as string
   
   updateTaskData(formData, sectionId);
@@ -170,9 +183,12 @@ export const updateSectionTaskData = async (formData: FormData) => {
 // 🟢 this gets Project Data
 export async function getProjectData() {
   noStore();
+  const theUser = await currentUser();
+  const theUserId = theUser?.id;
+  
   const data = await prisma.project.findMany({
     where: {
-      userId: uId
+      userId: theUserId
   },
   orderBy: {
       createdAt: 'desc'
@@ -184,9 +200,11 @@ export async function getProjectData() {
 
 //🟢 this is the function to add projects to the database based on user
 export async function addProject(formData: FormData) {
-  // noStore();
+  noStore();
+  const theUser = await currentUser();
+  const theUserId = theUser?.id;
+  
   const requestBody = formData;
-  const uId = '1Itwela';
 
   const formProjectName = formData.get('name') as string;
   const formColor = formData.get('color') as string;
@@ -195,7 +213,7 @@ export async function addProject(formData: FormData) {
       data: {
           name: formProjectName,
           color: formColor,
-          userId: uId,
+          userId: theUserId,
       }
       
     })
@@ -205,8 +223,7 @@ export async function addProject(formData: FormData) {
 
 // 🟢 this deletes projects
 export const deleteProjectData = async (formData: FormData) => {
-  noStore();
-
+  noStore();  
   const projectId = formData.get('projectId') as string
   const deleteProject = await prisma.project.delete({
     where: {
@@ -225,7 +242,10 @@ export const deleteProjectData = async (formData: FormData) => {
 
 //🔵 this gets todays task data
 export async function getTodayTaskData() {
-  noStore();
+  noStore(); 
+  const theUser = await currentUser();
+  const theUserId = theUser?.id;
+ 
   const currentDate = new Date().toISOString(); // Get current date and time in ISO format
   const todayDate = currentDate.substring(0, 10); // Extract only the date part
   const startTime = todayDate + 'T00:00:00.00Z'; // Start time of the current day
@@ -233,7 +253,7 @@ export async function getTodayTaskData() {
 
   const data = await prisma.task.findMany({
     where: {
-      userId: uId,
+      userId: theUserId,
       createdAt: {
         gte: new Date(startTime), // Filter tasks created after the start time of today
         lte: new Date(endTime),   // Filter tasks created before the end time of today
@@ -246,10 +266,13 @@ export async function getTodayTaskData() {
 
 //🔵  this gets alltask Data
 export async function getTaskData() {
-  noStore();
+  noStore(); 
+  const theUser = await currentUser();
+  const theUserId = theUser?.id;
+ 
   const data = await prisma.task.findMany({
     where: {
-      userId: uId
+      userId: theUserId
   },
   orderBy: {
       createdAt: 'desc'
@@ -262,6 +285,9 @@ export async function getTaskData() {
 //🔵 this is the function to add tasks to the database based on user
 export async function addTask(formData: FormData) {
   noStore();
+  const theUser = await currentUser();
+  const theUserId = theUser?.id;
+  
   const requestBody = formData;
   
   const theSections = await getSectionData();
@@ -276,7 +302,7 @@ export async function addTask(formData: FormData) {
   const formSection = formData.get('section') as string;
 
   let taskData: any = {
-    userId: uId,
+    userId: theUserId,
     name: formTaskName,
     description: formDescription,
     duedate: formDueDate, 
@@ -310,14 +336,16 @@ export async function addTask(formData: FormData) {
 
 // 🔵 this toogles task status
 export async function toggleTaskStatus(formData: FormData) {
-  noStore();
-
+  noStore(); 
+  const theUser = await currentUser();
+  const theUserId = theUser?.id;
+ 
   try {  
     const formTaskId = formData.get('taskId') as string;
     const formTaskStatus = formData.get('taskStatus') as string;
     
     let taskData: any = {
-      userId: uId,
+      userId: theUserId,
     };
   
     if (formTaskStatus === 'completed') {
@@ -343,7 +371,9 @@ export async function toggleTaskStatus(formData: FormData) {
 
 // 🔵 this is the function to update tasks to the database based on user
 export const updateTaskData = async (formData: FormData, sectionId?: string, projectId?: string) => {
-  noStore();
+  noStore();  
+  const theUser = await currentUser();
+  const theUserId = theUser?.id;
 
   const taskId = formData.get('taskId') as string
   const theSectionID = sectionId
@@ -354,7 +384,7 @@ export const updateTaskData = async (formData: FormData, sectionId?: string, pro
   const formProject = formData.get('project') as string;
   
   let taskData: any = {
-    userId: uId,
+    userId: theUserId,
     name: formTaskName,
     description: formDescription,
     duedate: formDueDate, 
@@ -383,8 +413,7 @@ export const updateTaskData = async (formData: FormData, sectionId?: string, pro
 
 // 🔵 this is the function to delete tasks
 export const deleteTaskData = async (formData: FormData) => {
-  noStore();
-
+  noStore();  
   const taskId = formData.get('taskId') as string
 
   await prisma.task.delete({
@@ -406,10 +435,13 @@ export const deleteTaskData = async (formData: FormData) => {
 
 // ⚪  this gets task Data
 export async function getSubtaskData() {
-  noStore();
+  noStore();  
+  const theUser = await currentUser();
+  const theUserId = theUser?.id;
+
   const data = await prisma.subtask.findMany({
     where: {
-      userId: uId
+      userId: theUserId
   },
   orderBy: {
       createdAt: 'desc'
@@ -426,10 +458,13 @@ export async function getSubtaskData() {
 
 // 🟠  this gets thoughts Data
 export async function getThoughtsData() {
-  noStore();
+  noStore(); 
+  const theUser = await currentUser();
+  const theUserId = theUser?.id;
+ 
   const data = await prisma.thought.findMany({
     where: {
-      userId: uId
+      userId: theUserId
   },
   orderBy: {
       createdAt: 'desc'
@@ -442,12 +477,15 @@ export async function getThoughtsData() {
 // 🟠 this adds thoughts
 export async function addThoughts(formData: FormData) {
   noStore();
+  const theUser = await currentUser();
+  const theUserId = theUser?.id;
+  
   const requestBody = formData;
   
   const formSectionName = formData.get('thoughtname') as string;
 
   let thoughtdata: any = {
-    userId: uId,
+    userId: theUserId,
     name: formSectionName,
   };
 
@@ -460,13 +498,16 @@ export async function addThoughts(formData: FormData) {
 
 // 🟠 this updates thoughts
 export const updateThoughtsData = async (formData: FormData) => {
-  
+  noStore();
+  const theUser = await currentUser();
+  const theUserId = theUser?.id;
+
   const thoughtId = formData.get('thoughtId') as string
   const formThoughtName = formData.get('thoughtname') as string;
 
 
   let thoughtdata: any = {
-    userId: uId,
+    userId: theUserId,
     name: formThoughtName,
   };
 
@@ -485,7 +526,6 @@ export const updateThoughtsData = async (formData: FormData) => {
 // 🟠 this deletes thoughts
 export const deleteThoughtsData = async (formData: FormData) => {
   noStore();
-
   const thoughtId = formData.get('thoughtId') as string
 
   // Delete the section itself
@@ -505,10 +545,13 @@ export const deleteThoughtsData = async (formData: FormData) => {
 
 // 🟡  this gets quotes Data
 export async function getQuotesData() {
-  noStore();
+  noStore();  
+  const theUser = await currentUser();
+  const theUserId = theUser?.id;
+
   const data = await prisma.quote.findMany({
     where: {
-      userId: uId
+      userId: theUserId
   },
   orderBy: {
       createdAt: 'desc'
@@ -520,14 +563,17 @@ export async function getQuotesData() {
 
 // 🟡 this adds quotes
 export async function addQuotes(formData: FormData) {
-  noStore();
+  noStore(); 
+  const theUser = await currentUser();
+  const theUserId = theUser?.id;
+ 
   const requestBody = formData;
   
   const formQuoteName = formData.get('quote') as string;
 
 
   let quotedata: any = {
-    userId: uId,
+    userId: theUserId,
     name: formQuoteName,
   };
 
@@ -541,12 +587,15 @@ export async function addQuotes(formData: FormData) {
 
 // 🟡 this updates quotes
 export const updateQuotesData = async (formData: FormData) => {
-  
+  noStore();
+  const theUser = await currentUser();
+  const theUserId = theUser?.id;
+
   const quoteId = formData.get('quoteId') as string
   const formQuoteName = formData.get('quote') as string;
 
   let quotedata: any = {
-    userId: uId,
+    userId: theUserId,
     name: formQuoteName,
   };
 
@@ -564,7 +613,6 @@ export const updateQuotesData = async (formData: FormData) => {
 // 🟡 this deletes thoughts
 export const deleteQuotesData = async (formData: FormData) => {
   noStore();
-
   const quoteId = formData.get('quoteId') as string
 
   // Delete the section itself
