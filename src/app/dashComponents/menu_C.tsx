@@ -17,7 +17,7 @@ import Popover from "@mui/material/Popover";
 import React from "react";
 import { IoIosArrowDown, IoIosClose } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
-
+import { SignOutButton } from "@clerk/nextjs";
 
 
 // type imports
@@ -84,16 +84,16 @@ export function ZenMenuClient(
             {/* avatar - top */}
             <span className='w-full gap-4 flex place-items-center justify-between'>
               
-                <Link href='/profile' className="w-[80%]">
+                <Link href='/profile' className="w-[100%]">
                   <span className='w-[100%] p-2 hover:bg-lime-500/30 rounded-lg h-[3em] flex gap-4 items-center'>
                     <Avatar src={userdata?.profileImg as string} className="h-full w-[2em] rounded-full overflow-hidden"/>
                   <span className='truncate'>{userdata?.email}</span>
                   </span>
                 </Link>
 
-                <span className="p-2 hover:bg-lime-500/30 rounded-lg h-[3em]">
+                {/* <span className="p-2 hover:bg-lime-500/30 rounded-lg h-[3em]">
                   <BsLayoutTextWindowReverse size={20} />
-                </span> 
+                </span>  */}
 
             </span> 
 
@@ -240,7 +240,7 @@ export function ZenMenuClient(
             <span className='p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full  cursor-pointer flex gap-2'>
               <PiSignOut size={20} />
               <span>
-                Sign out
+                <SignOutButton />
               </span>
             </span>
 
@@ -397,7 +397,7 @@ export function ZenMenuClient(
                 <span className='p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full  cursor-pointer flex gap-2'>
                   <PiSignOut size={20} />
                   <span>
-                    Sign out
+                    <SignOutButton />
                   </span>
                 </span>
               </span>
