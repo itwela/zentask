@@ -41,7 +41,7 @@ export default function Home({taskdata, projectdata, sectiondata, thoughtdata, q
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
-  };
+  }; 
 
   const handleClose = () => {
     setSecForm(false)
@@ -253,7 +253,7 @@ const handleThoughtInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                       <Link href={`/edit/task/${task.id}`}>
                           <span className="flex flex-col gap-2 place-items-start">
                             <h3 className="">{task.name}</h3>
-                            <h3 className="text-slate-400">{task.description}</h3>
+                            <h3 className="text-slate-400">{task.description} - {task.duedate}</h3>
                           </span>
                       </Link>
 

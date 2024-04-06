@@ -82,7 +82,7 @@ export function ZenMenuClient(
           <span className='w-full h-max flex flex-col'>
 
             {/* avatar - top */}
-            <span className='w-full gap-4 flex place-items-center justify-between'>
+            <span className='hover:text-black w-full gap-4 flex place-items-center justify-between'>
               
                 <Link href='/profile' className="w-[100%]">
                   <span className='w-[100%] p-2 hover:bg-lime-500/30 rounded-lg h-[3em] flex gap-4 items-center'>
@@ -98,10 +98,10 @@ export function ZenMenuClient(
             </span> 
 
             {/* menu */}
-            <span className='select-none p-2'>Menu</span>
+            <span className='select-none py-4 text-black hover:bg-lime-500/30 rounded-lg h-[3em] font-bold'>Menu</span>
 
             {/* add task */}
-            <span className='p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full cursor-pointer flex gap-2'>
+            <span className='hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full cursor-pointer flex gap-2'>
 
               <FaCirclePlus size={20} />
               <span>
@@ -112,7 +112,7 @@ export function ZenMenuClient(
             {/* Home */}
 
             <Link href='/home'>
-              <span className='p-2 hover:bg-lime-500/30 rounded-lg h-[3em] w-full flex gap-2 justify-between place-items-center'>
+              <span className='hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] w-full flex gap-2 justify-between place-items-center'>
                 <span className="flex gap-2 place-items-center">
                   <HiOutlineHome size={20} />
                   <span>
@@ -127,7 +127,7 @@ export function ZenMenuClient(
 
             {/* Today */}
             <Link href='/today'>
-              <span className='p-2 hover:bg-lime-500/30 rounded-lg h-[3em] w-full flex gap-2 place-items-center justify-between'>
+              <span className='hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] w-full flex gap-2 place-items-center justify-between'>
                 <span className="flex gap-2 place-items-center">
                   <IoTodayOutline size={20} />
                   <span>
@@ -142,7 +142,7 @@ export function ZenMenuClient(
 
             {/* Upcoming */}
             <Link href='/upcoming'>
-              <span className='p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2'>
+              <span className='hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2'>
                 <IoCalendarOutline size={20} />
                 <span>
                   Upcoming
@@ -153,7 +153,7 @@ export function ZenMenuClient(
 
             {/*Thoughts */}
             <Link href='/thoughts'>
-              <span className='p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2'>
+              <span className='hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2'>
                 <PiBrain size={20} />
                 <span>
                   Thoughts
@@ -163,7 +163,7 @@ export function ZenMenuClient(
 
             {/* Quotes */}
             <Link href='/quotes'>
-              <span className='p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2'>
+              <span className='hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2'>
                 <PiQuotes size={20} />
                 <span>
                   Quotes
@@ -173,7 +173,7 @@ export function ZenMenuClient(
 
             {/* My Projects */}
             <Link href='/projects'>
-              <span className='p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2 justify-between'>
+              <span className='hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2 justify-between'>
                 <span className="flex gap-2 place-items-center">
                   <GoProjectSymlink size={20} />
                   <span>
@@ -213,11 +213,11 @@ export function ZenMenuClient(
           <span className='w-full h-max flex flex-col'>
 
             {/* User */}
-            <span className='select-none p-2'>User</span>
+            <span className='font-bold text-black select-none p-2'>User</span>
 
             {/* Activity */}
             <Link href='/activity'>
-              <span className='p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2'>
+              <span className='hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2'>
                 <FiActivity size={20} />
                 <span>
                   Activity
@@ -228,7 +228,7 @@ export function ZenMenuClient(
             {/* Settings */}
 
             <Link href='/settings'>
-              <span className='p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2'>
+              <span className='hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2'>
                 <IoSettingsOutline size={20} />
                 <span>
                   Settings
@@ -237,7 +237,7 @@ export function ZenMenuClient(
             </Link>
 
             {/* Sign Out */}
-            <span className='p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full  cursor-pointer flex gap-2'>
+            <span className='hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full  cursor-pointer flex gap-2'>
               <PiSignOut size={20} />
               <span>
                 <SignOutButton />
@@ -262,10 +262,12 @@ export function ZenMenuClient(
         <div id="mobilenav" className="sm:hidden absolute z-[100] bg-lime-200  flex place-items-start place-content-start w-screen h-screen">
           <header  className=" flex text-stone-700  w-[70vw] h-full">
             <span className='w-full h-full bg-lime-200/50 flex flex-col justify-between p-5'>
+              
               {/* Top Section of Nave */}
               <span className='w-full h-max flex flex-col'>
+                
                 {/* avatar - top */}
-                <span className='w-full gap-4 flex place-items-center justify-between'>
+                <span className='hover:text-black w-full gap-4 flex place-items-center justify-between'>
                   <Link href='/profile' className="w-[80%]">
                     <span className='w-[100%] p-2 hover:bg-lime-500/30 rounded-lg h-[3em] flex gap-4 items-center'>
                       <Avatar src={userdata?.profileImg as string} className="h-full w-[2em] rounded-full overflow-hidden" />
@@ -276,18 +278,21 @@ export function ZenMenuClient(
                     <IoIosClose size={30} />
                   </span>
                 </span>
+
                 {/* menu */}
-                <span className='select-none p-2'>Menu</span>
+                <span className='font-bold text-black select-none p-2'>Menu</span>
+                
                 {/* add task */}
-                <span className='p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full cursor-pointer flex gap-2'>
+                <span className='hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full cursor-pointer flex gap-2'>
                   <FaCirclePlus size={20} />
                   <span>
                     <ZenAddTaskModal projectdata={projectdata} />
                   </span>
                 </span>
+
                 {/* Home */}
                 <Link href='/home'>
-                  <span className='p-2 hover:bg-lime-500/30 rounded-lg h-[3em] w-full flex gap-2 justify-between place-items-center'>
+                  <span className='hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] w-full flex gap-2 justify-between place-items-center'>
                     <span className="flex gap-2 place-items-center">
                       <HiOutlineHome size={20} />
                       <span>
@@ -299,9 +304,10 @@ export function ZenMenuClient(
                     </span>
                   </span>
                 </Link>
+
                 {/* Today */}
                 <Link href='/today'>
-                  <span className='p-2 hover:bg-lime-500/30 rounded-lg h-[3em] w-full flex gap-2 place-items-center justify-between'>
+                  <span className='hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] w-full flex gap-2 place-items-center justify-between'>
                     <span className="flex gap-2 place-items-center">
                       <IoTodayOutline size={20} />
                       <span>
@@ -313,36 +319,40 @@ export function ZenMenuClient(
                     </span>
                   </span>
                 </Link>
+
                 {/* Upcoming */}
                 <Link href='/upcoming'>
-                  <span className='p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2'>
+                  <span className='hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2'>
                     <IoCalendarOutline size={20} />
                     <span>
                       Upcoming
                     </span>
                   </span>
                 </Link>
+
                 {/*Thoughts */}
                 <Link href='/thoughts'>
-                  <span className='p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2'>
+                  <span className='hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2'>
                     <PiBrain size={20} />
                     <span>
                       Thoughts
                     </span>
                   </span>
                 </Link>
+
                 {/* Quotes */}
                 <Link href='/quotes'>
-                  <span className='p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2'>
+                  <span className='hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2'>
                     <PiQuotes size={20} />
                     <span>
                       Quotes
                     </span>
                   </span>
                 </Link>
+
                 {/* My Projects */}
                 <Link href='/projects'>
-                  <span className='p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2 justify-between'>
+                  <span className='hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2 justify-between'>
                     <span className="flex gap-2 place-items-center">
                       <GoProjectSymlink size={20} />
                       <span>
@@ -370,37 +380,44 @@ export function ZenMenuClient(
                     </span>
                   )}
                 </Link>
+
               </span>
               {/* Bottom Section of Nave */}
               <span className='w-full h-max flex flex-col'>
+                
                 {/* User */}
-                <span className='select-none p-2'>User</span>
+                <span className='font-bold text-black select-none p-2'>User</span>
+                
                 {/* Activity */}
                 <Link href='/activity'>
-                  <span className='p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2'>
+                  <span className='hover:text-blackp-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2'>
                     <FiActivity size={20} />
                     <span>
                       Activity
                     </span>
                   </span>
                 </Link>
+
                 {/* Settings */}
                 <Link href='/settings'>
-                  <span className='p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2'>
+                  <span className='hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2'>
                     <IoSettingsOutline size={20} />
                     <span>
                       Settings
                     </span>
                   </span>
                 </Link>
+
                 {/* Sign Out */}
-                <span className='p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full  cursor-pointer flex gap-2'>
+                <span className='hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full  cursor-pointer flex gap-2'>
                   <PiSignOut size={20} />
                   <span>
                     <SignOutButton />
                   </span>
                 </span>
+
               </span>
+
             </span>
           </header>
           <div className="w-[30vw] h-full bg-gray-100">
