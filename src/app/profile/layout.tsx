@@ -6,8 +6,8 @@ export default async function ProfileS() {
 
   return (
 
-    <div className="w-screen ">
-        <main className="w-full h-full">
+    <div className="w-screen   bg-[#FFFDF6]  ">
+        <main className="w-full h-full   bg-[#FFFDF6]">
           <ProfilePage/>
         </main>
     </div>
