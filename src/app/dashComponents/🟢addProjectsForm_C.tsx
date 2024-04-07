@@ -14,6 +14,7 @@ import Popover from "@mui/material/Popover";
 import dayjs, { Dayjs } from 'dayjs';
 import { Badge, Select } from "@chakra-ui/react";
 import { ZenProject } from "@/types/uData";
+import { useFormStatus } from "react-dom";
 
 
 
@@ -29,6 +30,7 @@ export default function ZenAddProjectForm(
     const [formData, setFormData] = useState<FormData>({
         projectdata: {
             id: '',
+            color: '',
             name: '',
             userId: ''
         }       
@@ -83,6 +85,24 @@ export default function ZenAddProjectForm(
     const handleSubmit = async (e: any) => {
         console.log(formData);
     }
+
+    function AddProjectButton() {
+        const status = useFormStatus();
+    
+        return (
+            <>
+    
+                {status.pending != true && (
+                    <button onClick={handleSubmit} type="submit" className="bg-red-400 text-black p-2 rounded-lg px-4">Add</button>
+                )}
+    
+                {status.pending != false && (
+                    <button className="bg-lime-200 text-black p-2 rounded-lg px-4 animate-pulse" disabled >Loading..</button>
+                )}
+    
+            </>
+        )
+    }
  
 
     
@@ -110,18 +130,16 @@ export default function ZenAddProjectForm(
                     <input type="hidden" name="color" value={colorValue} />
                     <select onChange={handleStatusChange} id="color" name="color" className="bg-transparent py-2 w-full">
                         <option value="">Color</option> 
-                        <option value="#FF0000">Red</option>
-                        <option value="#FFA500">Orange</option>
-                        <option value="#FFFF00">Yellow</option>
-                        <option value="#00FF00">Lime</option>
-                        <option value="#0000FF">Green</option>
-                        <option value="0000FF">Blue</option>
-                        <option value="#FF00FF">Magenta</option>
-                        <option value="#800080">Purple</option>
-                        <option value="#FF69B4">Pink</option>
-                        <option value="#00FFFF">Cyan</option>
-                        <option value="#A52A2A">Brown</option>
-                        <option value="#808080">Gray</option>
+                        <option value="#ef4444">Red</option>
+                        <option value="#f97316">Orange</option>
+                        <option value="#eab308">Yellow</option>
+                        <option value="#84cc16">Lime</option>
+                        <option value="#22c55e">Green</option>
+                        <option value="#3b82f6">Blue</option>
+                        <option value="#a855f7">Purple</option>
+                        <option value="#ec4899">Pink</option>
+                        <option value="#451a03">Brown</option>
+                        <option value="#6b7280">Gray</option>
                     </select> 
                 </Badge>
                     
@@ -132,8 +150,8 @@ export default function ZenAddProjectForm(
                 <div className="flex gap-2 mt-5 justify-between">
                     <span></span>
                     <span className="flex gap-4">
-                        <button type="submit" className="min-w-[5em] bg-slate-100 hover:bg-slate-100 p-2 py-3 rounded-lg"  onClick={handleModalClose}>Cancel</button>
-                        <button type="submit"className="min-w-[5em] bg-lime-200/50 p-2 py-3 rounded-lg" onClick={handleSubmit}>Add</button>
+                        <button className="min-w-[5em] bg-slate-100 hover:bg-slate-100 p-2 py-3 rounded-lg"  onClick={handleModalClose}>Cancel</button>
+                        <AddProjectButton />
                     </span>
                 </div>
 

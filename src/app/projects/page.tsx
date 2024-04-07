@@ -8,7 +8,7 @@ import { ZenMenuS } from "../dashComponents/menu_S";
 import ZenAddTask from "../dashComponents/🔵addTask_C";
 import ZenAddProject from "../dashComponents/🟢addProjects_C";
 import ZenBottomBadge from "../dashComponents/bottomZentask_C";
-import { ProjectProps } from "@/types/uData";
+import { ProjectProps, ZenProject } from "@/types/uData";
 import { PiPencil } from "react-icons/pi";
 import { BsThreeDots } from "react-icons/bs";
 import Popover from "@mui/material/Popover";
@@ -16,6 +16,8 @@ import React from "react";
 import { deleteProjectData } from "@/actions/database";
 import ZenLine from "../dashComponents/line_C";
 import Link from "next/link";
+import { useFormStatus } from "react-dom";
+import { FaTrashCan } from "react-icons/fa6";
 
 // Client Component
 
@@ -39,6 +41,8 @@ export default function Projects({ projectdata }: ProjectProps) {
     }, 161)
   };
 
+
+
   return (
     <>
       <div className="flex relative flex-col text-black p-7 py-[6em] h-screen">
@@ -61,55 +65,34 @@ export default function Projects({ projectdata }: ProjectProps) {
 
         <div className="w-full h-max flex flex-col mt-6">
 
-          {projectdata?.map((project) => (
-            <div
-              className="w-full h-max flex flex-col cursor-pointer  hover:bg-slate-100 rounded-lg"
-              key={project.id}
-            >
-              <span className="relative py-4 px-1 flex justify-between place-items-center w-full h-[3.5em]">
-                <Link href={`/edit/project/${project.id}`}>
-                  <span>{project.name}</span>
-                </Link>
-                <span style={{ backgroundColor: project.color }} className="absolute top-[5%] left-[-1%] w-3 h-3 rounded-full"></span>
-                {projectEdit === true && (
+          {projectdata?.map((project: ZenProject, index: number) => (
+            <div key={index} className="w-full h-max flex flex-col cursor-pointer  hover:bg-slate-100 rounded-lg">
 
-                  <span className="flex gap-4 place-items-center">
-                    <PiPencil className="hover:bg-slate-100 " size={15} />
-                    <span
-                      id="duedate"
-                      className='outline-none rounded-full w-max cursor-pointer'>
-                      <span className="" onClick={handleClick}>
-                        <BsThreeDots className="hover:bg-slate-100 " size={15} />
-                      </span>
-                      <Popover
-                        open={open}
-                        onClose={handleClose}
-                        anchorEl={anchorEl}
-                        anchorOrigin={{
-                          vertical: 'bottom',
-                          horizontal: 'right',
-                        }}
-                        transformOrigin={{
-                          vertical: 'top',
-                          horizontal: 'right',
-                        }}
-                      >
-                        <span className="flex flex-col place-items-center">
-                          <span className="w-[150px] flex flex-col p-3">
-                            <span className="p-2 w-full hover:bg-slate-100 cursor-pointer">Edit</span>
-                            <form action={deleteProjectData}>
-                              <input type="hidden" name="projectId" value={project.id} />
-                              <button className="p-2 w-full flex place-items-start cursor-pointer text-red-500 hover:bg-slate-100" onClick={handleClose}>Delete</button>
-                            </form>
-                          </span>
-                        </span>
-                      </Popover>
-                    </span>
+              <div className="w-full h-max flex justify-between ">
 
+                <span className="relative py-4 px-1 flex justify-between place-items-center w-full h-[3.5em]">
+                  <Link href={`/edit/project/${project.id}`}>
+                    <span className="hover:font-bold">{project.name}</span>
+                  </Link>
+                  <span style={{ backgroundColor: project.color }} className="absolute top-[5%] left-[-1%] w-3 h-3 rounded-full"></span>
+                </span>
+
+              {projectEdit && (   
+                <span className="flex gap-2 place-items-center">
+                  <Link className="" href={`/edit/project/${project.id}`}>
+                    <PiPencil className="hover:bg-slate-100 p-2 rounded-lg" size={25} />
+                  </Link>
+                  <span className='outline-none rounded-full w-max cursor-pointer'>
+                        <form action={deleteProjectData}>
+                          <input type="hidden" name="projectId" value={project.id} />
+                          <button className="p-2 w-full flex place-items-start cursor-pointer text-red-500 hover:bg-slate-100" onClick={() => handleClose()}><FaTrashCan  /></button>
+                        </form>
                   </span>
+                </span>
+              )}
 
-                )}
-              </span>
+              </div>
+
             </div>
           ))}
 
