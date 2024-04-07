@@ -262,6 +262,12 @@ export async function addProject(formData: FormData) {
 export const deleteProjectData = async (formData: FormData) => {
   noStore();  
   const projectId = formData.get('projectId') as string
+  console.log(projectId);
+  const getprojects = await getProjectData();
+  const filer = getprojects.find((project: any) => project.id === projectId);
+  console.log(filer?.name);
+
+
   const deleteProject = await prisma.project.delete({
     where: {
       id: projectId,
@@ -452,6 +458,10 @@ export const updateTaskData = async (formData: FormData, sectionId?: string, pro
 export const deleteTaskData = async (formData: FormData) => {
   noStore();  
   const taskId = formData.get('taskId') as string
+  console.log(taskId);
+  const gettasks = await getTaskData();
+  const filer = gettasks.find((task: any) => task.id === taskId);
+  console.log(filer?.name);
 
   await prisma.task.delete({
     where: {

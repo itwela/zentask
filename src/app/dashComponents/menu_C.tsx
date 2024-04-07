@@ -176,13 +176,15 @@ export function ZenMenuClient(
             </Link>
 
             {/* My Projects */}
-            <Link href='/projects'>
               <span className='hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2 justify-between'>
                 <span className="flex gap-2 place-items-center">
                   <GoProjectSymlink size={20} />
+                <Link href='/projects'>
                   <span>
                     My Projects
                   </span>
+                </Link>
+
                 </span>
 
                 { openProj === false && (
@@ -203,13 +205,14 @@ export function ZenMenuClient(
               {openProj === true && (
                 <span className="flex flex-col p-2">
                   {projectdata?.map((project) => (
-                    <span className="p-2 hover  flex place-items-center hover:bg-lime-500/30 rounded-lg h-[3em]">
-                      {project.name}
-                    </span>
+                    <Link href={`/edit/project/${project.id}`}>
+                      <span className="p-2 hover  flex place-items-center hover:bg-lime-500/30 rounded-lg h-[3em]">
+                        {project.name}
+                      </span>
+                    </Link>
                   ))}
                 </span>
               )}
-            </Link>
 
           </span>
 
@@ -355,13 +358,14 @@ export function ZenMenuClient(
                 </Link>
 
                 {/* My Projects */}
-                <Link href='/projects'>
                   <span className='hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2 justify-between'>
                     <span className="flex gap-2 place-items-center">
                       <GoProjectSymlink size={20} />
+                  <Link href='/projects'>
                       <span>
                         My Projects
                       </span>
+                    </Link>
                     </span>
                     {openProj === false && (
                       <span onClick={handleOpenProj} className="p-2 h-max">
@@ -377,13 +381,14 @@ export function ZenMenuClient(
                   {openProj === true && (
                     <span className="flex flex-col p-2">
                       {projectdata?.map((project) => (
-                        <span className="p-2 hover  flex place-items-center hover:bg-lime-500/30 rounded-lg h-[3em]">
-                          {project.name}
-                        </span>
+                        <Link href={`/edit/project/${project.id}`}>
+                          <span className="p-2 hover  flex place-items-center hover:bg-lime-500/30 rounded-lg h-[3em]">
+                            {project.name}
+                          </span>
+                        </Link>
                       ))}
                     </span>
                   )}
-                </Link>
 
               </span>
               {/* Bottom Section of Nave */}

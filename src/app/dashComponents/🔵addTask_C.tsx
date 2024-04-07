@@ -12,7 +12,7 @@ import { DateCalendar } from "@mui/x-date-pickers";
 import ZenLine from './line_C';
 import { ZenProject, ZenSection, ZenTask } from '@/types/uData';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs/AdapterDayjs';
-
+import { useFormStatus } from 'react-dom';
 
 interface FormData {
     taskdata: ZenTask
@@ -110,6 +110,23 @@ export default function ZenAddTask({projectdata, sectiondata, today, tommorrow}:
         console.log(formData);
     }
 
+    function AddTaskButton() {
+        const status = useFormStatus();
+    
+        return (
+            <>
+    
+                {status.pending != true && (
+                    <button type="submit" className="bg-lime-200 hover:bg-lime-200/50 text-black p-2 rounded-lg px-4">Add Task</button>
+                )}
+    
+                {status.pending != false && (
+                    <button type="submit" className="bg-lime-200 hover:bg-lime-200/50 text-black p-2 rounded-lg px-4 animate-pulse" disabled >Loading..</button>
+                )}
+    
+            </>
+        )
+    }
 
     return (
         <>
@@ -241,8 +258,8 @@ export default function ZenAddTask({projectdata, sectiondata, today, tommorrow}:
                         </div>       
 
                         <span className="flex gap-4">
-                            <button type="submit" className="bg-slate-100 hover:bg-slate-200 p-2 py-3 rounded-lg"  onClick={handleTaskClose}>Cancel</button>
-                            <button type="submit"className="bg-lime-200/50 p-2 py-3 rounded-lg">Add Task</button>
+                            <button className="bg-slate-200 hover:bg-slate-100 p-2 py-3 rounded-lg"  onClick={handleTaskClose}>Cancel</button>
+                            <AddTaskButton />
                         </span>
                     </div>
 

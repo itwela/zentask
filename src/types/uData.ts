@@ -9,6 +9,7 @@ export interface ZenUser {
 
 export interface ZenProject {
   id: string;
+  color: string | '';
   name: string | null;
   userId: string;
   projectId?: string | null;

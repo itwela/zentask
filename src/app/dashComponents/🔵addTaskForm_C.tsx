@@ -34,6 +34,8 @@ export default function ZenAddTaskForm(
             description: '',
             duedate: '',
             projectId: null,
+            sectionId: null,
+            completed: false,
             priority: '', 
             createdAt: '',
             updeatedAt: '',
