@@ -378,7 +378,9 @@ export function ZenMenuClient(
                     <span className="flex flex-col p-2">
                       {projectdata?.map((project) => (
                         <span className="p-2 hover  flex place-items-center hover:bg-lime-500/30 rounded-lg h-[3em]">
-                          {project.name}
+                          <Link href={`/edit/project/${project.id}`}>
+                              {project.name}
+                          </Link>
                         </span>
                       ))}
                     </span>

@@ -21,6 +21,7 @@ export default function ZenAddProject() {
     const [formData, setFormData] = useState<FormData>({
         projectdata: {
             id: '',
+            color: '',
             name: '',
             userId: ''
         }       
@@ -118,7 +119,7 @@ export default function ZenAddProject() {
                                 <option value="#FFFF00">Yellow</option>
                                 <option value="#00FF00">Lime</option>
                                 <option value="#0000FF">Green</option>
-                                <option value="0000FF">Blue</option>
+                                <option value="#0000FF">Blue</option>
                                 <option value="#FF00FF">Magenta</option>
                                 <option value="#800080">Purple</option>
                                 <option value="#FF69B4">Pink</option>
