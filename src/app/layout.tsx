@@ -14,9 +14,8 @@ export default function RootLayout({
     <ClerkProvider
     signInUrl="/sign-in"
     signUpUrl="/sign-up"
-    afterSignInUrl="/today"
-    afterSignUpUrl="/today"
-    // signOutUrl="/sign-out"
+    afterSignInUrl="/home"
+    afterSignUpUrl="/home"
     publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
     >
     <html lang="en" className="text-xs">

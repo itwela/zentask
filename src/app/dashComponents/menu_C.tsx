@@ -33,13 +33,15 @@ import ZenAddProjectModal from "./🟢addProjectsModal_C";
 import { UserButton } from "@clerk/nextjs";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-
-
+import { useRouter } from "next/navigation";
+ 
 
 export function ZenMenuClient(
   { userdata, taskdata, projectdata, todaystaskdata }: 
   { userdata: ZenUser | null; taskdata: any; projectdata: ZenProject[] | null, todaystaskdata: any }
   ) {
+
+  const router = useRouter();
 
   useGSAP(() => {
     gsap.set("#mobilenav", {
@@ -71,6 +73,8 @@ export function ZenMenuClient(
   const [openProj, setOpenProj] = React.useState(false);
   const handleOpenProj = () => setOpenProj(true);
   const handleCloseProj = () => setOpenProj(false);
+
+  
 
   return (
     <>
@@ -227,7 +231,7 @@ export function ZenMenuClient(
 
             {/* Settings */}
 
-            <Link href='/settings'>
+            <Link href='/profile'>
               <span className='hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2'>
                 <IoSettingsOutline size={20} />
                 <span>
@@ -237,7 +241,7 @@ export function ZenMenuClient(
             </Link>
 
             {/* Sign Out */}
-            <span className='hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full  cursor-pointer flex gap-2'>
+            <span onClick={() => router.refresh()} className='hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full  cursor-pointer flex gap-2'>
               <PiSignOut size={20} />
               <span>
                 <SignOutButton />
@@ -399,7 +403,7 @@ export function ZenMenuClient(
                 </Link>
 
                 {/* Settings */}
-                <Link href='/settings'>
+                <Link href='/profile'>
                   <span className='hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2'>
                     <IoSettingsOutline size={20} />
                     <span>
@@ -409,12 +413,12 @@ export function ZenMenuClient(
                 </Link>
 
                 {/* Sign Out */}
-                <span className='hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full  cursor-pointer flex gap-2'>
+                <span onClick={() => router.refresh()} className='hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full  cursor-pointer flex gap-2'>
                   <PiSignOut size={20} />
                   <span>
                     <SignOutButton />
                   </span>
-                </span>
+                </span> 
 
               </span>
 

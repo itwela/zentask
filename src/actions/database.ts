@@ -23,6 +23,43 @@ export async function getUserData() {
     return data;
   }
 
+export async function updateUserData() {
+  noStore();
+  const clerkuser = await currentUser();
+
+  let userdata: any = {
+    id: clerkuser?.id as string,
+    email: clerkuser?.emailAddresses[0].emailAddress as string,
+    firstName: clerkuser?.firstName as string,
+    lastName: clerkuser?.lastName as string,
+    username: clerkuser?.username as string,
+    profileImg: clerkuser?.imageUrl as string,
+  };
+
+  const apiAdd = await prisma?.user.update({  
+    where: {
+      id: clerkuser?.id,
+    },
+    data: userdata  
+  });
+
+  revalidatePath("/");
+
+}
+
+export async function deleteAllUserData() {
+  noStore();
+  const clerkuser = await currentUser();
+
+  const apiAdd = await prisma?.user.delete({  
+    where: {
+      id: clerkuser?.id,
+    },
+  });
+
+  revalidatePath("/");
+
+}
 // END USER STUFF ------------------------------------------------
 
 // 

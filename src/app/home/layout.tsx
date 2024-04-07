@@ -3,7 +3,7 @@ import { unstable_noStore as noStore, revalidatePath } from "next/cache";
 import prisma from "../../libs/db";
 import { ReactNode } from 'react';
 import { ZenMenuS } from '../dashComponents/menu_S';
-import { getProjectData, getQuotesData, getSectionData, getTaskData, getThoughtsData } from '@/actions/database';
+import { getProjectData, getQuotesData, getSectionData, getTaskData, getThoughtsData, updateUserData } from '@/actions/database';
 import Home from './page';
 import { currentUser } from '@clerk/nextjs';
 
@@ -35,6 +35,11 @@ async function fetchData() {
         profileImg: clerkuser?.imageUrl as string,
       },
     });
+  }
+
+  // update user
+  if(user) {
+    const updateuser = await updateUserData();
   }
 
 

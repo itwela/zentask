@@ -10,7 +10,7 @@ export default function LandingPage() {
             <span className="text-2xl p-4 bg-white text-black rounded-lg">Sign-in</span>
           </Link>
           <Link href="/sign-up">
-            <span className="text-2xl p-4 bg-green-200 rounded-lg">Sign-up</span>
+            <span className="text-2xl p-4 bg-lime-200 rounded-lg">Sign-up</span>
           </Link>
         </div>
     </main>
