@@ -13,6 +13,7 @@ import Popover from "@mui/material/Popover";
 import { deleteTaskData, toggleTaskStatus } from "@/actions/database";
 import { FaCircleCheck } from "react-icons/fa6";
 import Link from "next/link";
+import { useFormStatus } from "react-dom";
 
 // Client Component
 
@@ -41,7 +42,45 @@ export default function Upcoming({ taskdata, projectdata, sectiondata }: { taskd
     };
   
     const [taskEdit, settaskEdit] = React.useState(false);
-  // 🔵🔵🔵 ---- END TASK ----------------
+ 
+ 
+    function CompleteButton() {
+      const status = useFormStatus();
+  
+      return (
+          <>
+  
+              {status.pending != true && (
+                <button><RxCircle className="px-3 w-max h-max hover:text-lime-600" type="submit" /></button>
+              )}
+  
+              {status.pending != false && (
+                <button disabled><FaCircleCheck className="px-3 w-max h-max text-gray-500 animate-pulse" /></button>
+              )}
+  
+          </>
+      )
+    }
+  
+    function UnCompleteButton() {
+      const status = useFormStatus();
+  
+      return (
+          <>
+  
+              {status.pending != true && (
+                <button><FaCircleCheck className="px-3 w-max h-max text-lime-500" type="submit" /></button>
+              )}
+  
+              {status.pending != false && (
+                  <button disabled><FaCircleCheck className="px-3 w-max h-max text-gray-500 animate-pulse" type="submit" /></button>
+              )}
+  
+          </>
+      )
+    }
+
+    // 🔵🔵🔵 ---- END TASK ----------------
 
   return (
     <>
@@ -63,7 +102,7 @@ export default function Upcoming({ taskdata, projectdata, sectiondata }: { taskd
             {taskdata?.map((task: ZenTask, index: number) => (
               <>
                   {/* task container */}         
-                  <div className="task-container">
+                  <div className="task-container w-[505] min-w-[200px]">
                     
                     <div className="flex flex-col gap-3 mb-3">
                       <span className="flex place-items-center justify-between p-2">
@@ -78,24 +117,27 @@ export default function Upcoming({ taskdata, projectdata, sectiondata }: { taskd
                         {/* Render individual task details here */}
                         <div className="flex cursor-pointer gap-2 place-items-center justify-between p-2">
                           <span className="flex py-2 gap-2 place-items-start w-full hover:bg-slate-100 rounded-lg ">
+                            
                             {task.completed != true && (
                               <span>
                                 <form className="" action={toggleTaskStatus}>
                                   <input type="hidden" name="taskId" value={task.id} />
                                   <input type="hidden" name="taskStatus" value='completed' />
-                                  <button><RxCircle className="px-3 w-max h-max hover:text-lime-500 font-bold" type="submit" /></button>
+                                  <CompleteButton />
                                 </form>
                               </span>
                             )}
+
                             {task.completed != false && (
                               <span>
                                 <form className="" action={toggleTaskStatus}>
                                   <input type="hidden" name="taskId" value={task.id} />
                                   <input type="hidden" name="taskStatus" value='notdone' />
-                                  <button><FaCircleCheck className="px-3 w-max h-max text-lime-500" type="submit" /></button>
+                                <UnCompleteButton />
                                 </form>
                               </span>
                             )}
+
                             <Link href={`/edit/task/${task.id}`}>
                               <span className="flex flex-col gap-2 place-items-start">
                                 <h3 className="">{task.name}</h3>
