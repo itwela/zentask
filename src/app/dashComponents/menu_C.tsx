@@ -102,7 +102,7 @@ export function ZenMenuClient(
             </span> 
 
             {/* menu */}
-            <span className='select-none py-4 text-black hover:bg-lime-500/30 rounded-lg h-[3em] font-bold'>Menu</span>
+            <span className='select-none py-4 text-black rounded-lg h-[3em] font-bold'>Menu</span>
 
             {/* add task */}
             <span className='hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full cursor-pointer flex gap-2'>
