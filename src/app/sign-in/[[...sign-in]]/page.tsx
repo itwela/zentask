@@ -6,11 +6,11 @@ import { useEffect } from 'react';
 
 
 const SignInPage = () => {
-  const router = useRouter();
+  // const router = useRouter();
   
-  useEffect(() => {
-    router.refresh();
-  }, []);
+  // useEffect(() => {
+  //   router.refresh();
+  // }, []);
 
   return (
     <>
