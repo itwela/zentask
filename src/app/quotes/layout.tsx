@@ -13,10 +13,12 @@ export default async function QuotesS() {
         <h1 className='text-2xl animate-pulse'>Zentask</h1>
       </div>
     }>
-    <div className="flex">
-      <div className="flex">
+    <div className="flex w-screen">
+      <div className="flex w-full">
         <ZenMenuS/>
-        <main><Quotes/></main>
+        <main className='w-full'>
+          <Quotes/>
+        </main>
       </div>
     </div>
 </Suspense>

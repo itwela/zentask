@@ -12,7 +12,7 @@ export default function Quotes() {
 
   return (
     <>
-          <div className="flex flex-col text-black p-7 py-[6em] h-screen">
+          <div className="flex flex-col w-full text-black p-7 py-[6em] h-screen">
               <div className="">
                   <h2 className="font-bold text-4xl">Quotes</h2>
               </div>

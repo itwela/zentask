@@ -45,7 +45,7 @@ export default function ZenAddQuote() {
             </span>
 
             {quoteOpen && (
-                <div className="w-full h-full outline outline-[1px] outline-slate-300 p-3 rounded-lg my-3">
+                <div className="w-full h-max outline outline-[1px] outline-slate-300 p-3 rounded-lg my-3">
                 <form action={addQuotes} className="flex flex-col">
                     {/* input fields */}
                     
