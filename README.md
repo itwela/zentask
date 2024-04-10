@@ -20,7 +20,7 @@ cd your-desired-location
 and use the following command:
 
 ```bash
-git clone https://github.com/itwela/zentask
+git clone https://github.com/itwela/zentask.git
 ```
 
 ## Getting Started
