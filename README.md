@@ -52,6 +52,8 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+**Tip: WHen you are signing in, if you get stuck, click the Stuck button it should help if any issues arise there.**
+
 ## Features:
 
 🌐 nextjs App Router
