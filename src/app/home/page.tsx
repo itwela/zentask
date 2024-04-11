@@ -35,6 +35,23 @@ interface FormData {
 
 
 export default function Home({taskdata, projectdata, sectiondata, thoughtdata, quotedata}: {taskdata: any, projectdata: any, sectiondata: any, thoughtdata: any, quotedata: any}) {
+  
+  const [formData, setFormData] = useState<FormData>({
+    sectiondata: {
+        id: '',
+        name: '',
+        userId: '',
+        createdAt: '',
+        updeatedAt: '',
+      },
+    thoughtdata: {
+      id: '',
+      name: '',
+      content: '',
+      createdAt: '',
+      updeatedAt: '',
+    }       
+  });
  
   // Hndle date
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
@@ -99,23 +116,6 @@ export default function Home({taskdata, projectdata, sectiondata, thoughtdata, q
   
 // 🟣🟣🟣 ------------  SECTION ----------------
 
-  // 🟣
-  const [formData, setFormData] = useState<FormData>({
-    sectiondata: {
-        id: '',
-        name: '',
-        userId: '',
-        createdAt: '',
-        updeatedAt: '',
-      },
-    thoughtdata: {
-      id: '',
-      name: '',
-      content: '',
-      createdAt: '',
-      updeatedAt: '',
-    }       
-  });
 
   // 🟣
   const handleSectionInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -179,8 +179,8 @@ const handleThoughtInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   const { name, value } = e.target;
   setFormData(prevState => ({
       ...prevState,
-      sectiondata: {
-          ...prevState.sectiondata,
+      thoughtdata: {
+          ...prevState.thoughtdata,
           [name]: value
           }
       }));

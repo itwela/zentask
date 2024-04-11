@@ -93,7 +93,7 @@ export default function ZenAddProjectForm(
             <>
     
                 {status.pending != true && (
-                    <button onClick={handleSubmit} type="submit" className="bg-red-400 text-black p-2 rounded-lg px-4">Add</button>
+                    <button type="submit" className="bg-red-400 text-black p-2 rounded-lg px-4">Add</button>
                 )}
     
                 {status.pending != false && (
