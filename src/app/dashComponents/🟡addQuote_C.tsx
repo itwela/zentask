@@ -5,6 +5,7 @@ import { ZenQuotes } from "@/types/uData";
 import React, { useState } from "react";
 import { BsPlusLg } from "react-icons/bs"
 import ZenLine from "./line_C";
+import { useFormStatus } from "react-dom";
 
 interface FormData {
     quotes: ZenQuotes
@@ -38,6 +39,24 @@ export default function ZenAddQuote() {
             }));
     };
 
+    function AddQuoteButton() {
+        const status = useFormStatus();
+    
+        return (
+            <>
+    
+                {status.pending != true && (
+                    <button type="submit" className="bg-lime-200 hover:bg-lime-200/50 text-black p-2 rounded-lg px-4">Add Quote</button>
+                )}
+    
+                {status.pending != false && (
+                    <button className="bg-lime-200 text-black p-2 rounded-lg px-4 animate-pulse" disabled >Loading..</button>
+                )}
+    
+            </>
+        )
+    }
+
     return (
         <>
             <span onClick={handleQuoteOpen} className="cursor-pointer place-items-center hover:text-lime-500 hover:font-bold flex gap-2">
@@ -45,7 +64,7 @@ export default function ZenAddQuote() {
             </span>
 
             {quoteOpen && (
-                <div className="w-full h-full outline outline-[1px] outline-slate-300 p-3 rounded-lg my-3">
+                <div className="w-full h-max outline outline-[1px] outline-slate-300 p-3 rounded-lg my-3">
                 <form action={addQuotes} className="flex flex-col">
                     {/* input fields */}
                     
@@ -65,8 +84,8 @@ export default function ZenAddQuote() {
                     <div className="flex gap-2 mt-5 justify-between">
                         {/* add thought */}
                         <span className="flex gap-4">
-                            <button type="submit" className="bg-slate-100 hover:bg-slate-200 p-2 py-3 rounded-lg"  onClick={handleQuoteClose}>Cancel</button>
-                            <button type="submit"className="bg-lime-200/50 p-2 py-3 rounded-lg">Add Thought</button>
+                            <button type="submit" className="bg-slate-200 hover:bg-slate-100 p-2 py-3 rounded-lg"  onClick={handleQuoteClose}>Cancel</button>
+                            <AddQuoteButton/>
                         </span>
                     </div>
 

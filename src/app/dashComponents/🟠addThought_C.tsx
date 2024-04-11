@@ -6,6 +6,7 @@ import { BsPlusLg } from "react-icons/bs"
 import { addSection, addThoughts } from "@/actions/database";
 import ZenLine from "./line_C";
 import { Badge } from "@chakra-ui/react";
+import { useFormStatus } from "react-dom";
 
 interface FormData {
     thoughts: ZenThoughts
@@ -38,6 +39,24 @@ export default function ZenAddThought() {
                 }
             }));
     };
+
+    function AddThoughtButton() {
+        const status = useFormStatus();
+    
+        return (
+            <>
+    
+                {status.pending != true && (
+                    <button type="submit" className="bg-lime-200 hover:bg-lime-200/50 text-black p-2 rounded-lg px-4">Add Thought</button>
+                )}
+    
+                {status.pending != false && (
+                    <button className="bg-lime-200 text-black p-2 rounded-lg px-4 animate-pulse" disabled >Loading..</button>
+                )}
+    
+            </>
+        )
+    }
     
     return (
         <>
@@ -46,7 +65,7 @@ export default function ZenAddThought() {
             </span>
 
             {thoughtOpen && (
-                                 <div className="w-full h-full outline outline-[1px] outline-slate-300 p-3 rounded-lg my-3">
+                                 <div className="w-full h-max outline outline-[1px] outline-slate-300 p-3 rounded-lg my-2">
                                  <form action={addThoughts} className="flex flex-col">
                                      {/* input fields */}
                                      
@@ -63,12 +82,12 @@ export default function ZenAddThought() {
                                                                   
                                      <ZenLine />
                  
-                                     <div className="flex gap-2 mt-5 justify-between">
+                                     <div className="mt-4 flex place-content-end w-full">
                                             {/* add thought */}
                                             <span className="flex gap-4">
-                                             <button type="submit" className="bg-slate-100 hover:bg-slate-200 p-2 py-3 rounded-lg"  onClick={handleThoughtClose}>Cancel</button>
-                                             <button type="submit"className="bg-lime-200/50 p-2 py-3 rounded-lg">Add Thought</button>
-                                         </span>
+                                             <button type="submit" className="bg-slate-200 hover:bg-slate-100 p-2 py-3 rounded-lg"  onClick={handleThoughtClose}>Cancel</button>
+                                            <AddThoughtButton />
+                                            </span>
                                      </div>
                  
                                  </form>

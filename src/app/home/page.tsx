@@ -23,6 +23,7 @@ import ZenAddQuote from "../dashComponents/🟡addQuote_C";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import { FaCircleCheck } from "react-icons/fa6";
 import ZenBigLine from "../dashComponents/linebig_C";
+import { useFormStatus } from "react-dom";
 
 // client Component
 
@@ -34,34 +35,7 @@ interface FormData {
 
 
 export default function Home({taskdata, projectdata, sectiondata, thoughtdata, quotedata}: {taskdata: any, projectdata: any, sectiondata: any, thoughtdata: any, quotedata: any}) {
- 
-  // Hndle date
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
-  const open = Boolean(anchorEl);
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setSecForm(false)
-    setTimeout(() => {
-      setAnchorEl(null);
-    }, 10)
-
-  };
-
-// 🔵🔵🔵  ------------- TASK ----------------
-  const [taskEdit, settaskEdit] = React.useState(false);
-  const handletaskOpen = () => settaskEdit(true);
-  const handleTaskExit = () => settaskEdit(false);
-// 🔵🔵🔵 ---- END TASK ----------------
-
-
   
-// 🟣🟣🟣 ------------  SECTION ----------------
-
-  // 🟣
   const [formData, setFormData] = useState<FormData>({
     sectiondata: {
         id: '',
@@ -78,6 +52,70 @@ export default function Home({taskdata, projectdata, sectiondata, thoughtdata, q
       updeatedAt: '',
     }       
   });
+ 
+  // Hndle date
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  }; 
+
+  const handleClose = () => {
+    setSecForm(false)
+    setTimeout(() => {
+      setAnchorEl(null);
+    }, 10)
+
+  };
+
+// 🔵🔵🔵  ------------- TASK ----------------
+  const [taskEdit, settaskEdit] = React.useState(false);
+  const handletaskOpen = () => settaskEdit(true);
+  const handleTaskExit = () => settaskEdit(false);
+
+  function CompleteButton() {
+    const status = useFormStatus();
+
+    return (
+        <>
+
+            {status.pending != true && (
+              <button><RxCircle className="px-3 w-max h-max hover:text-lime-600" type="submit" /></button>
+            )}
+
+            {status.pending != false && (
+              <button disabled><FaCircleCheck className="px-3 w-max h-max text-gray-500 animate-pulse" /></button>
+            )}
+
+        </>
+    )
+  }
+
+  function UnCompleteButton() {
+    const status = useFormStatus();
+
+    return (
+        <>
+
+            {status.pending != true && (
+              <button><FaCircleCheck className="px-3 w-max h-max text-lime-500" type="submit" /></button>
+            )}
+
+            {status.pending != false && (
+                <button disabled><FaCircleCheck className="px-3 w-max h-max text-gray-500 animate-pulse" type="submit" /></button>
+            )}
+
+        </>
+    )
+  }
+
+  // 🔵🔵🔵 ---- END TASK ----------------
+
+
+  
+// 🟣🟣🟣 ------------  SECTION ----------------
+
 
   // 🟣
   const handleSectionInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -141,8 +179,8 @@ const handleThoughtInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   const { name, value } = e.target;
   setFormData(prevState => ({
       ...prevState,
-      sectiondata: {
-          ...prevState.sectiondata,
+      thoughtdata: {
+          ...prevState.thoughtdata,
           [name]: value
           }
       }));
@@ -234,7 +272,7 @@ const handleThoughtInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                           <form className="" action={toggleTaskStatus}>
                             <input type="hidden" name="taskId" value={task.id} />
                             <input type="hidden" name="taskStatus" value='completed' />
-                            <button><RxCircle className="px-3 w-max h-max hover:text-lime-500 font-bold" type="submit" /></button>
+                            <CompleteButton />
                           </form>
                         </span>
                       )}  
@@ -244,7 +282,7 @@ const handleThoughtInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                         <form className="" action={toggleTaskStatus}>
                           <input type="hidden" name="taskId" value={task.id} />
                           <input type="hidden" name="taskStatus" value='notdone' />
-                          <button><FaCircleCheck className="px-3 w-max h-max text-lime-500" type="submit" /></button>
+                          <UnCompleteButton />
                         </form>
                       </span>
                       )}  
@@ -253,7 +291,7 @@ const handleThoughtInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                       <Link href={`/edit/task/${task.id}`}>
                           <span className="flex flex-col gap-2 place-items-start">
                             <h3 className="">{task.name}</h3>
-                            <h3 className="text-slate-400">{task.description}</h3>
+                            <h3 className="text-slate-400">{task.description} - {task.duedate}</h3>
                           </span>
                       </Link>
 

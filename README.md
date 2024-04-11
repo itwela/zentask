@@ -11,27 +11,48 @@ In the dropdown, select your preferred method of download:
 
 Download ZIP: This will download the repository as a compressed ZIP file to your local machine. Extract the contents to your desired location.
 
-Clone Repository: If you have Git installed, you can clone the repository using the provided URL. Open a terminal or command prompt, navigate to your desired directory, and use the following command:
+Clone Repository: If you have Git installed, you can clone the repository using the provided URL. Open a terminal or command prompt, navigate to your desired directory using: 
 
 ```bash
-git clone https://github.com/repository-link-here
+cd your-desired-location 
+```
+
+and use the following command:
+
+```bash
+git clone https://github.com/itwela/zentask.git
 ```
 
 ## Getting Started
 
-First, run the development server:
+Make sure you are in your desired folder location before continuing.
+
+Then, install dependencies:
+
+```bash
+cd npm i
+```
+Next, create a " .env.local " file in the root directory and paste this in the .env.local file:
+
+```bash
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/dashboard
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/dashboard
+
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_cHJldHR5LW11bGUtMzYuY2xlcmsuYWNjb3VudHMuZGV2JA
+CLERK_SECRET_KEY=sk_test_4zEpeubK9E9usLX4Vwv5u7pDNgIXVDFcdY3tH7wngb
+```
+
+After, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+**Tip: When you are signing in, if you get stuck, click the Stuck button it should help if any issues arise there.**
 
 ## Features:
 
@@ -45,15 +66,13 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 🎨 Styling with tailwindcss and Chakra UI
 
-<!-- ✅ Change the color scheme to your liking -->
-
 Pending States
 
 Cache Revalidation
 
 Server side implementation
 
-Inbox
+Home
 
 Projects
 
@@ -61,7 +80,7 @@ Thoughts
 
 Calendar/Today and Upcoming Tasks
 
-Activity
+User account management
 
 
 # Resources Used

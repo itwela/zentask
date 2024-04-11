@@ -1,9 +1,9 @@
 import { ClerkProvider } from '@clerk/nextjs';
 import { unstable_noStore as noStore, revalidatePath } from "next/cache";
 import prisma from "../../libs/db";
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 import { ZenMenuS } from '../dashComponents/menu_S';
-import { getProjectData, getQuotesData, getSectionData, getTaskData, getThoughtsData } from '@/actions/database';
+import { getProjectData, getQuotesData, getSectionData, getTaskData, getThoughtsData, updateUserData } from '@/actions/database';
 import Home from './page';
 import { currentUser } from '@clerk/nextjs';
 
@@ -37,6 +37,11 @@ async function fetchData() {
     });
   }
 
+  // update user
+  if(user) {
+    const updateuser = await updateUserData();
+  }
+
 
 }
 
@@ -53,13 +58,18 @@ export default async function HomeS() {
   
     return (
   
-  
+      <Suspense fallback={
+        <div className='bg-[#FFFDF6] w-screen h-screen flex place-content-center place-items-center'>
+          <h1 className='text-2xl animate-pulse'>Zentask</h1>
+        </div>
+      }>
         <div className='w-screen h-screen'>
           <div className="flex w-full h-full ">
             <ZenMenuS/>
             <main className='w-full'><Home taskdata={taskdata} projectdata={projectdata} sectiondata={sectiondata} thoughtdata={thoughtdata} quotedata={quoteData}/></main>
           </div>
         </div>
+      </Suspense>
     );
 
   } catch (error) {

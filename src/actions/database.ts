@@ -23,6 +23,43 @@ export async function getUserData() {
     return data;
   }
 
+export async function updateUserData() {
+  noStore();
+  const clerkuser = await currentUser();
+
+  let userdata: any = {
+    id: clerkuser?.id as string,
+    email: clerkuser?.emailAddresses[0].emailAddress as string,
+    firstName: clerkuser?.firstName as string,
+    lastName: clerkuser?.lastName as string,
+    username: clerkuser?.username as string,
+    profileImg: clerkuser?.imageUrl as string,
+  };
+
+  const apiAdd = await prisma?.user.update({  
+    where: {
+      id: clerkuser?.id,
+    },
+    data: userdata  
+  });
+
+  revalidatePath("/");
+
+}
+
+export async function deleteAllUserData() {
+  noStore();
+  const clerkuser = await currentUser();
+
+  const apiAdd = await prisma?.user.delete({  
+    where: {
+      id: clerkuser?.id,
+    },
+  });
+
+  revalidatePath("/");
+
+}
 // END USER STUFF ------------------------------------------------
 
 // 
@@ -225,6 +262,12 @@ export async function addProject(formData: FormData) {
 export const deleteProjectData = async (formData: FormData) => {
   noStore();  
   const projectId = formData.get('projectId') as string
+  console.log(projectId);
+  const getprojects = await getProjectData();
+  const filer = getprojects.find((project: any) => project.id === projectId);
+  console.log(filer?.name);
+
+
   const deleteProject = await prisma.project.delete({
     where: {
       id: projectId,
@@ -415,6 +458,10 @@ export const updateTaskData = async (formData: FormData, sectionId?: string, pro
 export const deleteTaskData = async (formData: FormData) => {
   noStore();  
   const taskId = formData.get('taskId') as string
+  console.log(taskId);
+  const gettasks = await getTaskData();
+  const filer = gettasks.find((task: any) => task.id === taskId);
+  console.log(filer?.name);
 
   await prisma.task.delete({
     where: {

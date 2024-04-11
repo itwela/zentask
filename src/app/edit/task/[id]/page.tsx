@@ -15,6 +15,8 @@ import { useState } from "react";
 import { RxCircle } from "react-icons/rx";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs/AdapterDayjs';
 import { IoIosClose } from "react-icons/io";
+import { useFormStatus } from "react-dom";
+import Link from "next/link";
 
 
 interface FormData {
@@ -130,6 +132,24 @@ export default function EditTask({ taskdata, projectdata }: { taskdata: any, pro
         console.log(datevalue);
     }
 
+    function UpdateTaskButton() {
+        const status = useFormStatus();
+    
+        return (
+            <>
+    
+                {status.pending != true && (
+                    <button type="submit" className="bg-lime-200 hover:bg-lime-200/50 text-black p-3 rounded-lg px-4">Update</button>
+                )}
+    
+                {status.pending != false && (
+                    <button type="submit" className="bg-lime-200 hover:bg-lime-200/50 text-black p-3 rounded-lg px-4 animate-pulse" disabled >Loading..</button>
+                )}
+    
+            </>
+        )
+    }
+
     return (
         <>
             {filteredTask && (
@@ -140,11 +160,11 @@ export default function EditTask({ taskdata, projectdata }: { taskdata: any, pro
                             <form className="flex flex-col w-full h-full outline outline-[1px] outline-slate-300 p-4 rounded-lg" action={updateTaskData}>
 
                                 <div className="w-full flex flex-col gap-4 place-items-end mb-4">
-                                    <a href='/today'><span className="flex gap-1 place-items-center place-content-center hover:bg-slate-100 p-1 px-2 rounded-lg" > <span>Close</span> <IoIosClose className="" size={20} /></span></a>
+                                    <Link href='/today'><span className="flex gap-1 place-items-center place-content-center hover:bg-slate-100 p-1 px-2 rounded-lg" > <span>Close</span> <IoIosClose className="" size={20} /></span></Link>
                                     <ZenLine />
                                     <span className="flex justify-between w-full">
                                         <h2 className="text-2xl font-bold">{filteredTask.name}</h2>
-                                        <button type="submit" className="min-w-[5em] bg-lime-200/50 p-2 py-3 rounded-lg">Update Task</button>
+                                        <UpdateTaskButton />
                                     </span>
                                 </div>
 
