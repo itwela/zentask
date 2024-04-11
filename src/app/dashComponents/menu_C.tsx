@@ -223,14 +223,13 @@ export function ZenMenuClient(
             <span className='font-bold text-black select-none p-2'>User</span>
 
             {/* Activity */}
-            <Link href='/activity'>
-              <span className='hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2'>
-                <FiActivity size={20} />
-                <span>
-                  Activity
-                </span>
+            <span className='hover:cursor-not-allowed hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2'>
+              <FiActivity size={20} />
+              <span>
+                Activity
               </span>
-            </Link>
+            </span>
+
 
             {/* Settings */}
 
@@ -398,14 +397,12 @@ export function ZenMenuClient(
                 <span className='font-bold text-black select-none p-2'>User</span>
                 
                 {/* Activity */}
-                <Link href='/activity'>
-                  <span className='hover:text-blackp-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2'>
+                  <span className='hover:cursor-not-allowed hover:text-black p-2 hover:bg-lime-500/30 rounded-lg h-[3em] place-items-center w-full flex gap-2'>
                     <FiActivity size={20} />
                     <span>
                       Activity
                     </span>
                   </span>
-                </Link>
 
                 {/* Settings */}
                 <Link href='/profile'>

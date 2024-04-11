@@ -13,6 +13,7 @@ import Popover from "@mui/material/Popover";
 import { deleteTaskData, toggleTaskStatus } from "@/actions/database";
 import { FaCircleCheck } from "react-icons/fa6";
 import Link from "next/link";
+import { useFormStatus } from "react-dom";
 
 // Client Component
 
@@ -40,7 +41,44 @@ export default function Today({ taskdata, projectdata, sectiondata }: { taskdata
   };
 
   const [taskEdit, settaskEdit] = React.useState(false);
-// 🔵🔵🔵 ---- END TASK ----------------
+
+  function CompleteButton() {
+    const status = useFormStatus();
+
+    return (
+        <>
+
+            {status.pending != true && (
+              <button><RxCircle className="px-3 w-max h-max hover:text-lime-600" type="submit" /></button>
+            )}
+
+            {status.pending != false && (
+              <button disabled><FaCircleCheck className="px-3 w-max h-max text-gray-500 animate-pulse" /></button>
+            )}
+
+        </>
+    )
+  }
+
+  function UnCompleteButton() {
+    const status = useFormStatus();
+
+    return (
+        <>
+
+            {status.pending != true && (
+              <button><FaCircleCheck className="px-3 w-max h-max text-lime-500" type="submit" /></button>
+            )}
+
+            {status.pending != false && (
+                <button disabled><FaCircleCheck className="px-3 w-max h-max text-gray-500 animate-pulse" type="submit" /></button>
+            )}
+
+        </>
+    )
+  }
+
+  // 🔵🔵🔵 ---- END TASK ----------------
 
 
     return (
@@ -75,7 +113,7 @@ export default function Today({ taskdata, projectdata, sectiondata }: { taskdata
                         <form className="" action={toggleTaskStatus}>
                           <input type="hidden" name="taskId" value={task.id} />
                           <input type="hidden" name="taskStatus" value='completed' />
-                          <button><RxCircle className="px-3 w-max h-max hover:text-lime-500 font-bold" type="submit" /></button>
+                          <CompleteButton />
                         </form>
                       </span>
                     )}
@@ -85,7 +123,7 @@ export default function Today({ taskdata, projectdata, sectiondata }: { taskdata
                         <form className="" action={toggleTaskStatus}>
                           <input type="hidden" name="taskId" value={task.id} />
                           <input type="hidden" name="taskStatus" value='notdone' />
-                          <button><FaCircleCheck className="px-3 w-max h-max text-lime-500" type="submit" /></button>
+                          <UnCompleteButton />
                         </form>
                       </span>
                     )}

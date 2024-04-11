@@ -23,6 +23,7 @@ import ZenAddQuote from "../dashComponents/🟡addQuote_C";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import { FaCircleCheck } from "react-icons/fa6";
 import ZenBigLine from "../dashComponents/linebig_C";
+import { useFormStatus } from "react-dom";
 
 // client Component
 
@@ -34,6 +35,23 @@ interface FormData {
 
 
 export default function Home({taskdata, projectdata, sectiondata, thoughtdata, quotedata}: {taskdata: any, projectdata: any, sectiondata: any, thoughtdata: any, quotedata: any}) {
+  
+  const [formData, setFormData] = useState<FormData>({
+    sectiondata: {
+        id: '',
+        name: '',
+        userId: '',
+        createdAt: '',
+        updeatedAt: '',
+      },
+    thoughtdata: {
+      id: '',
+      name: '',
+      content: '',
+      createdAt: '',
+      updeatedAt: '',
+    }       
+  });
  
   // Hndle date
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
@@ -55,29 +73,49 @@ export default function Home({taskdata, projectdata, sectiondata, thoughtdata, q
   const [taskEdit, settaskEdit] = React.useState(false);
   const handletaskOpen = () => settaskEdit(true);
   const handleTaskExit = () => settaskEdit(false);
-// 🔵🔵🔵 ---- END TASK ----------------
+
+  function CompleteButton() {
+    const status = useFormStatus();
+
+    return (
+        <>
+
+            {status.pending != true && (
+              <button><RxCircle className="px-3 w-max h-max hover:text-lime-600" type="submit" /></button>
+            )}
+
+            {status.pending != false && (
+              <button disabled><FaCircleCheck className="px-3 w-max h-max text-gray-500 animate-pulse" /></button>
+            )}
+
+        </>
+    )
+  }
+
+  function UnCompleteButton() {
+    const status = useFormStatus();
+
+    return (
+        <>
+
+            {status.pending != true && (
+              <button><FaCircleCheck className="px-3 w-max h-max text-lime-500" type="submit" /></button>
+            )}
+
+            {status.pending != false && (
+                <button disabled><FaCircleCheck className="px-3 w-max h-max text-gray-500 animate-pulse" type="submit" /></button>
+            )}
+
+        </>
+    )
+  }
+
+  // 🔵🔵🔵 ---- END TASK ----------------
 
 
   
 // 🟣🟣🟣 ------------  SECTION ----------------
 
-  // 🟣
-  const [formData, setFormData] = useState<FormData>({
-    sectiondata: {
-        id: '',
-        name: '',
-        userId: '',
-        createdAt: '',
-        updeatedAt: '',
-      },
-    thoughtdata: {
-      id: '',
-      name: '',
-      content: '',
-      createdAt: '',
-      updeatedAt: '',
-    }       
-  });
 
   // 🟣
   const handleSectionInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -141,8 +179,8 @@ const handleThoughtInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   const { name, value } = e.target;
   setFormData(prevState => ({
       ...prevState,
-      sectiondata: {
-          ...prevState.sectiondata,
+      thoughtdata: {
+          ...prevState.thoughtdata,
           [name]: value
           }
       }));
@@ -234,7 +272,7 @@ const handleThoughtInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                           <form className="" action={toggleTaskStatus}>
                             <input type="hidden" name="taskId" value={task.id} />
                             <input type="hidden" name="taskStatus" value='completed' />
-                            <button><RxCircle className="px-3 w-max h-max hover:text-lime-500 font-bold" type="submit" /></button>
+                            <CompleteButton />
                           </form>
                         </span>
                       )}  
@@ -244,7 +282,7 @@ const handleThoughtInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                         <form className="" action={toggleTaskStatus}>
                           <input type="hidden" name="taskId" value={task.id} />
                           <input type="hidden" name="taskStatus" value='notdone' />
-                          <button><FaCircleCheck className="px-3 w-max h-max text-lime-500" type="submit" /></button>
+                          <UnCompleteButton />
                         </form>
                       </span>
                       )}  

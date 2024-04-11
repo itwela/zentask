@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { BsPlusLg } from "react-icons/bs"
 import ZenLine from './line_C';
-import { Badge } from '@chakra-ui/react';
+import { Badge, background, useToast } from '@chakra-ui/react';
 import { addProject } from '@/actions/database';
 import { useState } from 'react';
 import { ZenProject } from '@/types/uData';
@@ -15,6 +15,10 @@ interface FormData {
 }
 
 export default function ZenAddProject() {
+    
+    const toast = useToast()
+
+
     const [sectionOpen, setSectionOpen] = React.useState(false);
     const handleSectionOpen = () => setSectionOpen(!sectionOpen);
     const handleSectionClose = () => setSectionOpen(false);

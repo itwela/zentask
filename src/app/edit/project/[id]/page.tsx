@@ -19,6 +19,7 @@ import ZenAddTask from "@/app/dashComponents/🔵addTask_C";
 import { BsThreeDots } from "react-icons/bs";
 import { FaCircleCheck } from "react-icons/fa6";
 import { PiPencil } from "react-icons/pi";
+import { useFormStatus } from "react-dom";
 
 
 interface FormData {
@@ -139,7 +140,44 @@ export default function EditProject({ taskdata, projectdata, sectiondata }: { ta
   const [taskEdit, settaskEdit] = React.useState(false);
   const handletaskOpen = () => settaskEdit(true);
   const handleTaskExit = () => settaskEdit(false);
-// 🔵🔵🔵 ---- END TASK ----------------
+
+  function CompleteButton() {
+    const status = useFormStatus();
+
+    return (
+        <>
+
+            {status.pending != true && (
+              <button><RxCircle className="px-3 w-max h-max hover:text-lime-600" type="submit" /></button>
+            )}
+
+            {status.pending != false && (
+              <button disabled><FaCircleCheck className="px-3 w-max h-max text-gray-500 animate-pulse" /></button>
+            )}
+
+        </>
+    )
+  }
+
+  function UnCompleteButton() {
+    const status = useFormStatus();
+
+    return (
+        <>
+
+            {status.pending != true && (
+              <button><FaCircleCheck className="px-3 w-max h-max text-lime-500" type="submit" /></button>
+            )}
+
+            {status.pending != false && (
+                <button disabled><FaCircleCheck className="px-3 w-max h-max text-gray-500 animate-pulse" type="submit" /></button>
+            )}
+
+        </>
+    )
+  }
+
+  // 🔵🔵🔵 ---- END TASK ----------------
 
 
     return (
@@ -167,7 +205,7 @@ export default function EditProject({ taskdata, projectdata, sectiondata }: { ta
                                                         <form className="" action={toggleTaskStatus}>
                                                             <input type="hidden" name="taskId" value={task.id} />
                                                             <input type="hidden" name="taskStatus" value='completed' />
-                                                            <button><RxCircle className="px-3 w-max h-max hover:text-lime-500 font-bold" type="submit" /></button>
+                                                            <CompleteButton />
                                                         </form>
                                                     </span>
                                                 )}
@@ -177,7 +215,7 @@ export default function EditProject({ taskdata, projectdata, sectiondata }: { ta
                                                         <form className="" action={toggleTaskStatus}>
                                                             <input type="hidden" name="taskId" value={task.id} />
                                                             <input type="hidden" name="taskStatus" value='notdone' />
-                                                            <button><FaCircleCheck className="px-3 w-max h-max text-lime-500" type="submit" /></button>
+                                                            <UnCompleteButton />
                                                         </form>
                                                     </span>
                                                 )}

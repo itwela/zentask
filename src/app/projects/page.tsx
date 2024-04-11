@@ -22,7 +22,7 @@ import { FaTrashCan } from "react-icons/fa6";
 // Client Component
 
 
-export default function Projects({ projectdata }: ProjectProps) {
+export default function Projects({ projectdata }: any) {
 
   const [projectEdit, setprojectEdit] = React.useState(false);
   const handleprojectEdit = () => setprojectEdit(true);
@@ -40,8 +40,6 @@ export default function Projects({ projectdata }: ProjectProps) {
       setAnchorEl(null);
     }, 161)
   };
-
-
 
   return (
     <>
