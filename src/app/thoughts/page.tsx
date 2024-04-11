@@ -97,7 +97,7 @@ export default function Thoughts({thoughtdata}: any) {
                 {thoughtdata.map((thought: ZenThoughts, index: number) => (
                   <div key={index} className="my-1 w-full h-max">
                 
-                      {thoughtEdit != true && (
+                      {thoughtEdit != true && ( 
                         <>
                           <div className="w-full h-max flex justify-between">
                               <div onClick={() => handleThoughtTasksToggle(thought.id)} className="py-3 hover:font-bold cursor-pointer w-full h-max">- {thought.name}</div>

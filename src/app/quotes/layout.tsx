@@ -1,11 +1,13 @@
 import { ReactNode, Suspense } from 'react';
 import { ZenMenuS } from '../dashComponents/menu_S';
-import { getUserData } from '@/actions/database';
+import { getQuotesData, getUserData } from '@/actions/database';
 import Projects from '../projects/page';
 import Quotes from './page';
 
 
 export default async function QuotesS() {
+
+  const quotedata = await getQuotesData();
 
   return (
     <Suspense fallback={
@@ -17,7 +19,7 @@ export default async function QuotesS() {
       <div className="flex w-full">
         <ZenMenuS/>
         <main className='w-full'>
-          <Quotes/>
+          <Quotes quotedata={quotedata}/>
         </main>
       </div>
     </div>
